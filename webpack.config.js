@@ -2,7 +2,7 @@ var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./app/index.js",
+  entry: "./src/index.js",
   devtool: "cheap-module-inline-source-map",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -29,7 +29,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./app/index.html"
+      template: "./src/index.html"
     })
   ]
 };
