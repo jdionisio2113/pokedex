@@ -8,5 +8,5 @@ export const REQUEST_FAILED = "REQUEST_FAILED";
 export const fetchPokemon = () => async dispatch => {
   const response = await jsonPlaceholder.get("/1");
 
-  dispatch({ type: FETCH_POKEMON, payload: response });
+  dispatch({ type: RECEIVE_POKEMON, payload: response.data });
 };

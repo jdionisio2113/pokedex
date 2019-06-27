@@ -14,7 +14,7 @@ class PokemonList extends React.Component {
 }
 
 const mapStateToProps = state => {
-  pokemon: state.pokemon;
+  return { pokemon: state.pokemon };
 };
 
 export default connect(
