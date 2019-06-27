@@ -1,7 +1,7 @@
 import { FETCH_POKEMON, RECEIVE_POKEMON, REQUEST_FAILED } from "../actions";
 
 const initialState = {
-  pokemonCollection: [],
+  pokedex: [],
   isFetching: false
 };
 
@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        pokemonCollection: action.payload
+        pokedex: action.payload
       };
     case REQUEST_FAILED:
       return {
