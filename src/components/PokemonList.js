@@ -1,21 +1,43 @@
 import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
+import PokemonType from "./PokemonType";
+import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 // import { img } from "../images/pokeball.png";
 
 class PokemonList extends React.Component {
   renderList() {
     return this.props.pokemon.pokedex.map(pokemon => {
-      //   var pokemonImage = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/00${
+      // console.log(pokemon.entry_number);
+      //   var pokemonImage1 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/00${
       //     pokemon.entry_number
       //   }.png`;
-      var pokemonImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+      //   var pokemonImage2 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/0${
+      //     pokemon.entry_number
+      //   }.png`;
+      //   var pokemonImage3 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${
+      //     pokemon.entry_number
+      //   }.png`;
+
+      //   var pokemonImage1 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/0${
+      //     pokemon.entry_number
+      //   }.png`;
+      //   https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${
+      //     pokemon.entry_number
+      //   }.png`;
+      var pokemonImage1 = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
         pokemon.entry_number
       }.png`;
+      //   console.log(pokemonImage1);
       //   var pokemonImage = `https://img.pokemondb.net/artwork/${
       //     pokemon.pokemon_species.name
       //   }.jpg`;
       return (
-        <div className="pokedex-content" key={pokemon.entry_number}>
+        // <Link to={`/pokemon`}></Link>
+        <div
+          data-id={pokemon.entry_number}
+          className="pokedex-content"
+          key={pokemon.entry_number}
+        >
           <div className="pokebox">
             <h2 className="pokemon-name">{pokemon.pokemon_species.name}</h2>
             <img
@@ -23,8 +45,10 @@ class PokemonList extends React.Component {
               src={require("../images/pokeball.png")}
             />
             <div className="description">
-              <span>type</span>
-              <img className="pokemon-image" src={pokemonImage} />
+              <span>
+                <PokemonTypeContainer entry_number={pokemon.entry_number} />
+              </span>
+              <img className="pokemon-image" src={pokemonImage1} />
             </div>
           </div>
         </div>
@@ -33,8 +57,12 @@ class PokemonList extends React.Component {
   }
 
   render() {
-    console.log(this.props.pokemon);
-    return <div className="pokemon-container">{this.renderList()}</div>;
+    return (
+      <div className="pokemon-container">
+        {this.renderList()}
+        {/* <PokemonTypeContainer /> */}
+      </div>
+    );
   }
 }
 export default PokemonList;

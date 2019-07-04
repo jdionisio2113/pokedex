@@ -1,6 +1,6 @@
 import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
-// import PokemonList from "./PokemonList";
+import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 
 class App extends React.Component {
   render() {
