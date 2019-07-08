@@ -8,19 +8,6 @@ class PokemonTypeContainer extends React.Component {
     this.props.receivePokemonInfo(this.props.entry_number);
   }
 
-  // renderType() {
-  //   const { pokemonInfo } = this.props;
-  //   if (!pokemonInfo) {
-  //     return null;
-  //   }
-
-  //   // console.log(this.props.pokemonInfo);
-
-  //   return pokemonInfo.types.map(poke => {
-  //     return <div>{poke.type.name}</div>;
-  //   });
-  // }
-
   render() {
     return (
       <div>
@@ -38,11 +25,6 @@ const mapStateToProps = (state, ownProps) => {
     )
   };
 };
-
-// export default connect(
-//   mapStateToProps,
-//   { receivePokemonInfo }
-// )(PokemonTypeContainer);
 
 export default connect(
   mapStateToProps,

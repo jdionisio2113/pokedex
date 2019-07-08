@@ -10,6 +10,7 @@ class PokemonListContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.pokemon);
     return (
       <div>
         <PokemonList pokemon={this.props.pokemon} />

@@ -9,8 +9,16 @@ export const RECEIVE_POKEMON_INFO = "RECEIVE_POKEMON_INFO";
 
 export const receivePokemon = () => async dispatch => {
   const response = await jsonPlaceholder.get("/pokedex/1");
-  dispatch({ type: RECEIVE_POKEMON, payload: response.data.pokemon_entries });
+  dispatch({
+    type: RECEIVE_POKEMON,
+    payload: response.data.pokemon_entries
+  });
 };
+
+// export const receivePokemon = () => async dispatch => {
+//   const response = await jsonPlaveholder.get("/pokemon");
+//   dispatch({ type: RECEIVE_POKEMON, payload: response.data });
+// }
 
 export const receivePokemonInfo = id => dispatch => {
   _receivePokemonInfo(id, dispatch);
