@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { receivePokemon } from "../actions";
+import { receivePokemon, displayNextBatch } from "../actions";
 import PokemonList from "../components/PokemonList";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 
@@ -10,10 +10,10 @@ class PokemonListContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.pokemon);
     return (
       <div>
         <PokemonList pokemon={this.props.pokemon} />
+        <button onClick={this.props.displayNextBatch}>loadMore</button>
       </div>
     );
   }
@@ -27,5 +27,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { receivePokemon }
+  { receivePokemon, displayNextBatch }
 )(PokemonListContainer);

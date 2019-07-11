@@ -13,7 +13,25 @@ body {
   right: -8%;
 }
 
-.pokemon-image {
+.pokemon-image1 {
+  /* width: 130px;
+  height: 106px; */
+  border-radius: 30%;
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+}
+
+.pokemon-image2 {
+  /* width: 130px;
+  height: 106px; */
+  border-radius: 30%;
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+}
+
+.pokemon-image3 {
   /* width: 130px;
   height: 106px; */
   border-radius: 30%;
@@ -64,4 +82,26 @@ span {
 .description {
   display: flex;
   /* justify-content: space-around; */
+}
+
+.type {
+  text-transform: capitalize;
+  /* color: lightgray; */
+  /* background: rgba(255, 255, 255, 0.2); */
+  margin: 10px;
+  text-align: center;
+  padding: 0 5px;
+  border-radius: 15%;
+}
+
+.fire-type {
+  background: red;
+}
+
+.grass-type {
+  background: green;
+}
+
+.poison-type {
+  background: purple;
 }

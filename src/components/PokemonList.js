@@ -5,59 +5,27 @@ import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 // import { img } from "../images/pokeball.png";
 
 class PokemonList extends React.Component {
-  handleClick() {
-    // var itemsPerPage = this.props.pokemon.pageSize;
-    // console.log(itemsPerPage);
-    // console.log(this.props.pokemon);
-  }
-
   displayFirst20() {
     return this.props.pokemon.pokemon_to_display.map(pokemon => {
-      var pokemonImage1 = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-        pokemon.entry_number
-      }.png`;
-      //   console.log(pokemonImage1);
-      return (
-        // <Link to={`/pokemon`}></Link>
-        <div
-          data-id={pokemon.entry_number}
-          className="pokedex-content"
-          key={pokemon.entry_number}
-        >
-          <div className="pokebox">
-            <h2 className="pokemon-name">{pokemon.pokemon_species.name}</h2>
-            <img
-              className="pokeball-logo"
-              src={require("../images/pokeball.png")}
-            />
-            <div className="description">
-              <span>
-                <PokemonTypeContainer entry_number={pokemon.entry_number} />
-              </span>
-              <img className="pokemon-image" src={pokemonImage1} />
-            </div>
-          </div>
-        </div>
-      );
-    });
-  }
+      var format_picture_id = function(num) {
+        // If number is a single digit number, prepend the number
+        // with 2 zeroes
+        // if number is a double digit number, prepend the number with 1 zero
+        // if both conditions fail, don;t prepend any zeroes
 
-  renderList() {
-    return this.props.pokemon.pokedex.map(pokemon => {
-      // console.log(pokemon.entry_number);
-      // var pokemonImage1 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/00${
-      //   pokemon.entry_number
-      // }.png`;
-      // var pokemonImage2 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/0${
-      //   pokemon.entry_number
-      // }.png`;
-      //   var pokemonImage3 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${
-      //     pokemon.entry_number
-      //   }.png`;
-      var pokemonImage1 = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+        if (num <= 9) {
+          return `00${num}`;
+        } else if (num >= 10 && num <= 99) {
+          return `0${num}`;
+        } else {
+          return num;
+        }
+      };
+
+      var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
         pokemon.entry_number
-      }.png`;
-      //   console.log(pokemonImage1);
+      )}.png`;
+
       return (
         // <Link to={`/pokemon`}></Link>
         <div
@@ -75,7 +43,7 @@ class PokemonList extends React.Component {
               <span>
                 <PokemonTypeContainer entry_number={pokemon.entry_number} />
               </span>
-              <img className="pokemon-image" src={pokemonImage1} />
+              <img className="pokemon-image1" src={imageUrl} />
             </div>
           </div>
         </div>
@@ -84,14 +52,7 @@ class PokemonList extends React.Component {
   }
 
   render() {
-    return (
-      <div className="pokemon-container">
-        {this.displayFirst20()}
-        {/* <button onClick={this.renderList()}>load more </button> */}
-        {/* {this.renderList()} */}
-        {/* <PokemonTypeContainer /> */}
-      </div>
-    );
+    return <div className="pokemon-container">{this.displayFirst20()}</div>;
   }
 }
 export default PokemonList;

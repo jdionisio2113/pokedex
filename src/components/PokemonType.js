@@ -8,10 +8,30 @@ class PokemonType extends React.Component {
       return null;
     }
 
-    // console.log(this.props.pokemonInfo);
-
     return pokemonInfo.types.map((poke, index) => {
-      return <div key={index}>{poke.type.name}</div>;
+      var name = poke.type.name;
+      var type_className = "";
+
+      switch (name) {
+        case "fire":
+          type_className = "fire-type";
+          break;
+        case "grass":
+          type_className = "grass-type";
+          break;
+
+        case "poison":
+          type_className = "poison-type";
+          break;
+
+        default:
+      }
+
+      return (
+        <div key={index} className="type">
+          <p className={type_className}>{poke.type.name}</p>
+        </div>
+      );
     });
   }
 

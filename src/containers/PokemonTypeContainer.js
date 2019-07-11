@@ -19,7 +19,7 @@ class PokemonTypeContainer extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    //   find all unique userId's from lists of posts
+    //   find all unique Id's from lists of pokemon
     pokemonInfo: state.pokemonInfo.find(
       poke => poke.id === ownProps.entry_number
     )
