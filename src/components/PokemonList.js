@@ -2,6 +2,7 @@ import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonType from "./PokemonType";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
+// import type_className from "./PokemonType";
 // import { img } from "../images/pokeball.png";
 
 class PokemonList extends React.Component {
@@ -28,22 +29,18 @@ class PokemonList extends React.Component {
 
       return (
         // <Link to={`/pokemon`}></Link>
-        <div
-          data-id={pokemon.entry_number}
-          className="pokedex-content"
-          key={pokemon.entry_number}
-        >
+        <div className="pokedex-content" key={pokemon.entry_number}>
           <div className="pokebox">
             <h2 className="pokemon-name">{pokemon.pokemon_species.name}</h2>
             <img
               className="pokeball-logo"
-              src={require("../images/pokeball.png")}
+              src={require("../images/pokeball.svg")}
             />
             <div className="description">
               <span>
                 <PokemonTypeContainer entry_number={pokemon.entry_number} />
               </span>
-              <img className="pokemon-image1" src={imageUrl} />
+              <img className="pokemon-image" src={imageUrl} />
             </div>
           </div>
         </div>

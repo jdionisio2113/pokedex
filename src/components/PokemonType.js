@@ -1,5 +1,8 @@
 import React from "react";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
+import PokemonList from "./PokemonList";
+
+var type_className = "";
 
 class PokemonType extends React.Component {
   renderType() {
@@ -10,7 +13,7 @@ class PokemonType extends React.Component {
 
     return pokemonInfo.types.map((poke, index) => {
       var name = poke.type.name;
-      var type_className = "";
+      // var type_className = "";
 
       switch (name) {
         case "fire":
@@ -24,12 +27,35 @@ class PokemonType extends React.Component {
           type_className = "poison-type";
           break;
 
+        case "water":
+          type_className = "water-type";
+          break;
+
+        case "flying":
+          type_className = "flying-type";
+          break;
+
+        case "bug":
+          type_className = "bug-type";
+          break;
+
+        case "normal":
+          type_className = "normal-type";
+          break;
+
+        case "electric":
+          type_className = "electric-type";
+          break;
+
         default:
       }
+
+      console.log(type_className);
 
       return (
         <div key={index} className="type">
           <p className={type_className}>{poke.type.name}</p>
+          {/* <PokemonList type_className={"type_className"} /> */}
         </div>
       );
     });
