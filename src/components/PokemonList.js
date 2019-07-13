@@ -2,6 +2,7 @@ import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonType from "./PokemonType";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
+import ScrollUpButton from "react-scroll-up-button";
 // import type_className from "./PokemonType";
 // import { img } from "../images/pokeball.png";
 
@@ -49,7 +50,16 @@ class PokemonList extends React.Component {
   }
 
   render() {
-    return <div className="pokemon-container">{this.displayFirst20()}</div>;
+    return (
+      <div>
+        <div className="pokemon-container">
+          {this.displayFirst20()}
+          {/* {this.scrollToTop()} */}
+          {/* <ScrollUpButton style={{ borderRadius: "10%" }} /> */}
+        </div>
+        {/* <button>hi</button> */}
+      </div>
+    );
   }
 }
 export default PokemonList;

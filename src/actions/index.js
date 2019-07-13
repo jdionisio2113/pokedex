@@ -7,6 +7,7 @@ export const RECEIVE_POKEMON = "RECEIVE_POKEMON";
 export const REQUEST_FAILED = "REQUEST_FAILED";
 export const RECEIVE_POKEMON_INFO = "RECEIVE_POKEMON_INFO";
 export const DISPLAY_NEXT_BATCH = "DISPLAY_NEXT_BATCH";
+export const SCROLL_TO_TOP = "SCROLL_TO_TOP";
 
 export const receivePokemon = () => async dispatch => {
   const response = await jsonPlaceholder.get("/pokedex/1");
@@ -28,4 +29,8 @@ const _receivePokemonInfo = _.memoize(async (id, dispatch) => {
 
 export const displayNextBatch = function() {
   return { type: DISPLAY_NEXT_BATCH };
+};
+
+export const scrollToTop = function() {
+  return { type: SCROLL_TO_TOP };
 };
