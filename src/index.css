@@ -207,6 +207,13 @@ img {
   border-radius: 10%;
 }
 
+.logo {
+  font-family: "Russo One", sans-serif;
+  font-size: 4.3em;
+  text-align: center;
+  margin: 0;
+}
+
 .load-more {
   /* margin: 0 48%; */
 }
@@ -218,8 +225,8 @@ img {
 
   .scroll-up {
     position: fixed;
-    top: 50%;
-    right: 0;
+    top: 85%;
+    right: 3%;
   }
 
   .scroll-up:hover {
