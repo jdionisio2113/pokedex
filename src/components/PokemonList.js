@@ -2,12 +2,41 @@ import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonType from "./PokemonType";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
-import ScrollUpButton from "react-scroll-up-button";
-// import type_className from "./PokemonType";
-// import { img } from "../images/pokeball.png";
 
 class PokemonList extends React.Component {
-  displayFirst20() {
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+    document.querySelector(".scroll-up").style.display = "none";
+  }
+
+  handleScroll() {
+    // Get scroll position
+    // if scroll position is above 500px, display the "scroll to top" button, otherwise don't display the button
+    const scrollable =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = window.scrollY;
+
+    if (scrolled > 500) {
+      document.querySelector(".scroll-up").style.display = "block";
+    } else {
+      document.querySelector(".scroll-up").style.display = "none";
+    }
+
+    if (scrolled === scrollable) {
+      console.log("hello");
+    }
+  }
+
+  handleClick() {
+    if (window.pageYOffset > 200) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  }
+
+  displayFirst12() {
     return this.props.pokemon.pokemon_to_display.map(pokemon => {
       var format_picture_id = function(num) {
         // If number is a single digit number, prepend the number
@@ -51,13 +80,16 @@ class PokemonList extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="pokemon-container">
-          {this.displayFirst20()}
-          {/* {this.scrollToTop()} */}
-          {/* <ScrollUpButton style={{ borderRadius: "10%" }} /> */}
+      <div className="pokedex-container">
+        <div className="pokemon-container">{this.displayFirst12()}</div>
+        <div className="load">
+          <button className="load-more" onClick={this.props.displayNextBatch}>
+            Load More Pokémon
+          </button>
         </div>
-        {/* <button>hi</button> */}
+        <button className="scroll-up" onClick={this.handleClick}>
+          SCROLL UP
+        </button>
       </div>
     );
   }

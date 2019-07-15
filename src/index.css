@@ -57,19 +57,12 @@ body {
   justify-content: space-around;
 }
 
-.pokebox {
-  /* text-align: center; */
-  margin: 0.5em;
-  /* background: blue; */
-}
-
 img {
   border-radius: 10%;
 }
 
 .description {
   display: flex;
-  /* justify-content: space-around; */
 }
 
 .type {
@@ -215,9 +208,21 @@ img {
 }
 
 .load-more {
-  /* margin: 0 48%; */
+  background: #30a7d7;
+  color: white;
+  font-family: "Flexo-Demi", arial, sans-serif;
+  font-size: 1em;
+  padding: 1em;
+  border-radius: 5px;
 }
 
+.load {
+  text-align: center;
+}
+
+.pokedex-container {
+  /* text-align: center; */
+}
 @media screen and (min-width: 600px) {
   .pokemon-container {
     margin: 1em 8em;

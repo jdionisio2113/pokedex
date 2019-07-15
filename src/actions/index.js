@@ -27,8 +27,8 @@ const _receivePokemonInfo = _.memoize(async (id, dispatch) => {
   dispatch({ type: RECEIVE_POKEMON_INFO, payload: response.data });
 });
 
-export const displayNextBatch = function() {
-  return { type: DISPLAY_NEXT_BATCH };
+export const displayNextBatch = () => dispatch => {
+  dispatch({ type: DISPLAY_NEXT_BATCH });
 };
 
 export const scrollToTop = function() {

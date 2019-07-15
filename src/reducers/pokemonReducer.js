@@ -8,8 +8,7 @@ import {
 const initialState = {
   pokedex: [],
   pokemon_to_display: [],
-  isFetching: false,
-  displayUpButton: false
+  isFetching: false
 };
 
 export default (state = initialState, action) => {
@@ -40,7 +39,6 @@ export default (state = initialState, action) => {
 
       // after finding the pokemon in the next pokedex array,
       // i will grab the next twelve pokemon and add it to pokemon_to_display
-
       var lastPokemon =
         state.pokemon_to_display[state.pokemon_to_display.length - 1];
       var indexOfLastPokemon = state.pokedex.indexOf(lastPokemon);
@@ -52,14 +50,9 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        displayUpButton: true,
         pokemon_to_display: [...state.pokemon_to_display, ...batch]
       };
 
-    // case "DISPLAY_TOP_BUTTON":
-    //   if (window.pageYOffset > 200) {
-    //     displayUpButton: true;
-    //   }
     case REQUEST_FAILED:
       return {
         ...state,
