@@ -4,6 +4,10 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 .pokeball-logo {
   /* position: absolute; */
   width: 120px;
@@ -221,14 +225,23 @@ img {
   margin: 0;
 }
 
-.pokedex-container {
-  /* text-align: center; */
-}
-
 .input-container {
   text-align: center;
   /* margin: 1em 0; */
 }
+
+/* .show-box {
+  position: fixed;
+  overflow: hidden;
+} */
+
+/* .search-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  position: fixed;
+} */
 @media screen and (min-width: 600px) {
   .pokemon-container {
     margin: 0 8em;

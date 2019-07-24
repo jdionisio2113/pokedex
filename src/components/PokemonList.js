@@ -3,6 +3,7 @@ import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonType from "./PokemonType";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import axios from "axios";
+import { Link } from "react-router-dom";
 // import Search from "./Search";
 // import findPokemon from "../actions";
 
@@ -32,10 +33,6 @@ class PokemonList extends React.Component {
     clearTimeout(this.myTimeout);
 
     this.myTimeout = setTimeout(() => {
-      this.setState({
-        input: value
-      });
-
       var filtered_pokemon = pokemon.pokedex.filter(function(pk) {
         var pk_name = pk.pokemon_species.name.toLowerCase();
         var user_input = value.toLowerCase();
@@ -46,57 +43,63 @@ class PokemonList extends React.Component {
       });
 
       this.setState({
+        input: value,
         collection: filtered_pokemon
       });
 
-      if (value === "") {
-        document.querySelector(".main-content").style.display = "block";
-      } else {
-        document.querySelector(".main-content").style.display = "none";
-      }
+      // if (this.state.input === "") {
+      //   document.querySelector(".main-content").style.visibility = "visibile";
+      // } else {
+      //   document.querySelector(".main-content").style.visibility = "hidden";
+      // }
     }, 500);
   }
 
   displaySearch() {
-    return this.state.collection.map(function(item) {
-      var name = item.pokemon_species.name;
-      var id = item.entry_number;
-      var format_picture_id = function(num) {
-        // If number is a single digit number, prepend the number
-        // with 2 zeroes
-        // if number is a double digit number, prepend the number with 1 zero
-        // if both conditions fail, don;t prepend any zeroes
+    if (this.state.input.length > 0) {
+      // document.querySelector(".main-content").style.visibility = "hidden";
+      return this.state.collection.map(function(item) {
+        var name = item.pokemon_species.name;
+        var id = item.entry_number;
+        var format_picture_id = function(num) {
+          // If number is a single digit number, prepend the number
+          // with 2 zeroes
+          // if number is a double digit number, prepend the number with 1 zero
+          // if both conditions fail, don;t prepend any zeroes
 
-        if (num <= 9) {
-          return `00${num}`;
-        } else if (num >= 10 && num <= 99) {
-          return `0${num}`;
-        } else {
-          return num;
-        }
-      };
+          if (num <= 9) {
+            return `00${num}`;
+          } else if (num >= 10 && num <= 99) {
+            return `0${num}`;
+          } else {
+            return num;
+          }
+        };
 
-      var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-        id
-      )}.png`;
-      return (
-        <div className="pokedex-content" key={id}>
-          <div className="pokebox">
-            <h2 className="pokemon-name">{name}</h2>
-            <img
-              className="pokeball-logo"
-              src={require("../images/pokeball.svg")}
-            />
-            <div className="description">
-              <span>
-                <PokemonTypeContainer entry_number={id} />
-              </span>
-              <img className="pokemon-image" src={imageUrl} />
+        var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+          id
+        )}.png`;
+        return (
+          <div className="pokedex-content" key={id}>
+            <div className="pokebox">
+              <h2 className="pokemon-name">{name}</h2>
+              <img
+                className="pokeball-logo"
+                src={require("../images/pokeball.svg")}
+              />
+              <div className="description">
+                <span>
+                  <PokemonTypeContainer entry_number={id} />
+                </span>
+                <img className="pokemon-image" src={imageUrl} />
+              </div>
             </div>
           </div>
-        </div>
-      );
-    });
+        );
+      });
+    } else {
+      return null;
+    }
   }
 
   handleScroll() {
@@ -150,22 +153,29 @@ class PokemonList extends React.Component {
       )}.png`;
 
       return (
-        // <Link to={`/pokemon`}></Link>
-        <div className="pokedex-content" key={pokemon.entry_number}>
-          <div className="pokebox">
-            <h2 className="pokemon-name">{pokemon.pokemon_species.name}</h2>
-            <img
-              className="pokeball-logo"
-              src={require("../images/pokeball.svg")}
-            />
-            <div className="description">
-              <span>
-                <PokemonTypeContainer entry_number={pokemon.entry_number} />
-              </span>
-              <img className="pokemon-image" src={imageUrl} />
+        <Link
+          to={{
+            pathname: "/pokemon",
+            search: "?pokemon=" + pokemon.pokemon_species.name
+          }}
+          key={pokemon.entry_number}
+        >
+          <div className="pokedex-content">
+            <div className="pokebox">
+              <h2 className="pokemon-name">{pokemon.pokemon_species.name}</h2>
+              <img
+                className="pokeball-logo"
+                src={require("../images/pokeball.svg")}
+              />
+              <div className="description">
+                <span>
+                  <PokemonTypeContainer entry_number={pokemon.entry_number} />
+                </span>
+                <img className="pokemon-image" src={imageUrl} />
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       );
     });
   }
@@ -182,11 +192,12 @@ class PokemonList extends React.Component {
               placeholder="Search"
               autoComplete="off"
               className="input"
+              onSubmit={this.displaySearch}
               onChange={this.handleSearch}
             />
           </form>
-          <div className="pokemon-container">{this.displaySearch()}</div>
         </div>
+        <div className="show-box pokemon-container">{this.displaySearch()}</div>
         <div className="main-content">
           <div className="pokemon-container">{this.displayFirst12()}</div>
           <div className="load">
