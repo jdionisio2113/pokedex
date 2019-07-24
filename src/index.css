@@ -227,11 +227,11 @@ img {
 
 .input-container {
   text-align: center;
-  margin: 1em 0;
+  /* margin: 1em 0; */
 }
 @media screen and (min-width: 600px) {
   .pokemon-container {
-    margin: 1em 8em;
+    margin: 0 8em;
   }
 
   .scroll-up {

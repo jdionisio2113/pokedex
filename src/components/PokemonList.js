@@ -36,27 +36,30 @@ class PokemonList extends React.Component {
         input: value
       });
 
-      console.log(value);
-      pokemon.pokedex.map(poke => {
-        var name = poke.pokemon_species.name;
-        var entry_number = poke.entry_number;
-        if (name.includes(value.toLowerCase())) {
-          this.setState({
-            collection: name,
-            id: entry_number
-          });
-        } else {
-          this.displayFirst12();
+      var filtered_pokemon = pokemon.pokedex.filter(function(pk) {
+        var pk_name = pk.pokemon_species.name.toLowerCase();
+        var user_input = value.toLowerCase();
+
+        if (pk_name.indexOf(user_input) !== -1) {
+          return pk;
         }
       });
-      // console.log(this.props.findPokemon(value));
-    }, 600);
+
+      this.setState({
+        collection: filtered_pokemon
+      });
+    }, 500);
+    if (value === "") {
+      document.querySelector(".main-content").style.display = "block";
+    } else {
+      document.querySelector(".main-content").style.display = "none";
+    }
   }
 
   displaySearch() {
-    const { pokemon } = this.props;
-    if (this.state.input.length > 0) {
-      document.querySelector(".main-content").style.display = "none";
+    return this.state.collection.map(function(item) {
+      var name = item.pokemon_species.name;
+      var id = item.entry_number;
       var format_picture_id = function(num) {
         // If number is a single digit number, prepend the number
         // with 2 zeroes
@@ -73,28 +76,26 @@ class PokemonList extends React.Component {
       };
 
       var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-        this.state.id
+        id
       )}.png`;
       return (
-        <div className="pokedex-content" key={this.state.id}>
+        <div className="pokedex-content" key={id}>
           <div className="pokebox">
-            <h2 className="pokemon-name">{this.state.collection}</h2>
+            <h2 className="pokemon-name">{name}</h2>
             <img
               className="pokeball-logo"
               src={require("../images/pokeball.svg")}
             />
             <div className="description">
               <span>
-                <PokemonTypeContainer entry_number={this.state.id} />
+                <PokemonTypeContainer entry_number={id} />
               </span>
               <img className="pokemon-image" src={imageUrl} />
             </div>
           </div>
         </div>
       );
-    } else {
-      return null;
-    }
+    });
   }
 
   handleScroll() {
@@ -180,12 +181,9 @@ class PokemonList extends React.Component {
               placeholder="Search"
               autoComplete="off"
               className="input"
-              //   value={this.props.pokemnon.onChange}
-              // onSubmit={this.handleSubmit}
               onChange={this.handleSearch}
             />
           </form>
-          {/* <Search /> */}
           <div className="pokemon-container">{this.displaySearch()}</div>
         </div>
         <div className="main-content">
