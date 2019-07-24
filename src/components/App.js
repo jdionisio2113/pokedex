@@ -1,12 +1,13 @@
 import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
+// import SearchContainer from "../containers/SearchContainer";
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <h1 className="logo">POKEDÉX</h1>
+        {/* <SearchContainer /> */}
         <PokemonListContainer />
       </div>
     );

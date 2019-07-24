@@ -202,7 +202,7 @@ img {
 
 .logo {
   font-family: "Russo One", sans-serif;
-  font-size: 4.3em;
+  font-size: 3em;
   text-align: center;
   margin: 0;
 }
@@ -218,10 +218,16 @@ img {
 
 .load {
   text-align: center;
+  margin: 0;
 }
 
 .pokedex-container {
   /* text-align: center; */
+}
+
+.input-container {
+  text-align: center;
+  margin: 1em 0;
 }
 @media screen and (min-width: 600px) {
   .pokemon-container {

@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { receivePokemon, displayNextBatch, scrollToTop } from "../actions";
+import {
+  receivePokemon,
+  displayNextBatch,
+  scrollToTop,
+  findPokemon
+} from "../actions";
 import PokemonList from "../components/PokemonList";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 
@@ -10,7 +15,6 @@ class PokemonListContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.pokemon);
     return (
       <div>
         <PokemonList
