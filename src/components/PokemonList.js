@@ -48,12 +48,13 @@ class PokemonList extends React.Component {
       this.setState({
         collection: filtered_pokemon
       });
+
+      if (value === "") {
+        document.querySelector(".main-content").style.display = "block";
+      } else {
+        document.querySelector(".main-content").style.display = "none";
+      }
     }, 500);
-    if (value === "") {
-      document.querySelector(".main-content").style.display = "block";
-    } else {
-      document.querySelector(".main-content").style.display = "none";
-    }
   }
 
   displaySearch() {
