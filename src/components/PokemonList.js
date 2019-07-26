@@ -2,23 +2,18 @@ import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonType from "./PokemonType";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
-import axios from "axios";
-import { Link } from "react-router-dom";
-// import Search from "./Search";
-// import findPokemon from "../actions";
+import PokemonCard from "./PokemonCard";
 
 class PokemonList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      input: "",
-      collection: [],
-      id: ""
+      input: ""
     };
 
     this.handleSearch = this.handleSearch.bind(this);
-    this.displaySearch = this.displaySearch.bind(this);
+    this.displayPokemon = this.displayPokemon.bind(this);
   }
 
   componentDidMount() {
@@ -28,11 +23,15 @@ class PokemonList extends React.Component {
 
   handleSearch(e) {
     var value = e.target.value;
-    const { pokemon } = this.props;
+
+    this.setState({ input: value });
 
     clearTimeout(this.myTimeout);
 
     this.myTimeout = setTimeout(() => {
+      const { pokemon } = this.props;
+
+      // filter pokemon from pokedex based on user_input
       var filtered_pokemon = pokemon.pokedex.filter(function(pk) {
         var pk_name = pk.pokemon_species.name.toLowerCase();
         var user_input = value.toLowerCase();
@@ -42,64 +41,12 @@ class PokemonList extends React.Component {
         }
       });
 
-      this.setState({
-        input: value,
-        collection: filtered_pokemon
-      });
-
-      // if (this.state.input === "") {
-      //   document.querySelector(".main-content").style.visibility = "visibile";
-      // } else {
-      //   document.querySelector(".main-content").style.visibility = "hidden";
-      // }
+      if (value === "") {
+        this.props.update_queried_pokemon([]);
+      } else {
+        this.props.update_queried_pokemon(filtered_pokemon);
+      }
     }, 500);
-  }
-
-  displaySearch() {
-    if (this.state.input.length > 0) {
-      // document.querySelector(".main-content").style.visibility = "hidden";
-      return this.state.collection.map(function(item) {
-        var name = item.pokemon_species.name;
-        var id = item.entry_number;
-        var format_picture_id = function(num) {
-          // If number is a single digit number, prepend the number
-          // with 2 zeroes
-          // if number is a double digit number, prepend the number with 1 zero
-          // if both conditions fail, don;t prepend any zeroes
-
-          if (num <= 9) {
-            return `00${num}`;
-          } else if (num >= 10 && num <= 99) {
-            return `0${num}`;
-          } else {
-            return num;
-          }
-        };
-
-        var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-          id
-        )}.png`;
-        return (
-          <div className="pokedex-content" key={id}>
-            <div className="pokebox">
-              <h2 className="pokemon-name">{name}</h2>
-              <img
-                className="pokeball-logo"
-                src={require("../images/pokeball.svg")}
-              />
-              <div className="description">
-                <span>
-                  <PokemonTypeContainer entry_number={id} />
-                </span>
-                <img className="pokemon-image" src={imageUrl} />
-              </div>
-            </div>
-          </div>
-        );
-      });
-    } else {
-      return null;
-    }
   }
 
   handleScroll() {
@@ -118,7 +65,6 @@ class PokemonList extends React.Component {
 
     if (scrolled === scrollable) {
       this.props.displayNextBatch();
-      // document.querySelector(".load-more").style.display = "none";
     }
   }
 
@@ -131,53 +77,23 @@ class PokemonList extends React.Component {
     }
   }
 
-  displayFirst12() {
-    return this.props.pokemon.pokemon_to_display.map(pokemon => {
-      var format_picture_id = function(num) {
-        // If number is a single digit number, prepend the number
-        // with 2 zeroes
-        // if number is a double digit number, prepend the number with 1 zero
-        // if both conditions fail, don;t prepend any zeroes
+  displayPokemon() {
+    // if user has an input value, display pokemon from queried_pokemon array
 
-        if (num <= 9) {
-          return `00${num}`;
-        } else if (num >= 10 && num <= 99) {
-          return `0${num}`;
-        } else {
-          return num;
-        }
-      };
+    // else
 
-      var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-        pokemon.entry_number
-      )}.png`;
+    // display pokemon from pokemon to disply array
+    const { queried_pokemon, pokemon_to_display } = this.props.pokemon;
 
-      return (
-        <Link
-          to={{
-            pathname: "/pokemon",
-            search: "?pokemon=" + pokemon.pokemon_species.name
-          }}
-          key={pokemon.entry_number}
-        >
-          <div className="pokedex-content">
-            <div className="pokebox">
-              <h2 className="pokemon-name">{pokemon.pokemon_species.name}</h2>
-              <img
-                className="pokeball-logo"
-                src={require("../images/pokeball.svg")}
-              />
-              <div className="description">
-                <span>
-                  <PokemonTypeContainer entry_number={pokemon.entry_number} />
-                </span>
-                <img className="pokemon-image" src={imageUrl} />
-              </div>
-            </div>
-          </div>
-        </Link>
-      );
-    });
+    if (queried_pokemon.length > 0) {
+      return queried_pokemon.map(function(pokemon) {
+        return <PokemonCard pokemon={pokemon} key={pokemon.entry_number} />;
+      });
+    } else {
+      return pokemon_to_display.map(function(pokemon) {
+        return <PokemonCard pokemon={pokemon} key={pokemon.entry_number} />;
+      });
+    }
   }
 
   render() {
@@ -192,14 +108,13 @@ class PokemonList extends React.Component {
               placeholder="Search"
               autoComplete="off"
               className="input"
-              onSubmit={this.displaySearch}
               onChange={this.handleSearch}
+              value={this.state.input}
             />
           </form>
         </div>
-        <div className="show-box pokemon-container">{this.displaySearch()}</div>
         <div className="main-content">
-          <div className="pokemon-container">{this.displayFirst12()}</div>
+          <div className="pokemon-container">{this.displayPokemon()}</div>
           <div className="load">
             <button className="load-more" onClick={this.props.displayNextBatch}>
               Load More Pokémon

@@ -8,6 +8,7 @@ import {
 const initialState = {
   pokedex: [],
   pokemon_to_display: [],
+  queried_pokemon: [],
   isFetching: false
 };
 
@@ -51,6 +52,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pokemon_to_display: [...state.pokemon_to_display, ...batch]
+      };
+
+    case "UPDATE_QUERIED_POKEMON":
+      return {
+        ...state,
+        queried_pokemon: action.payload
       };
 
     case REQUEST_FAILED:
