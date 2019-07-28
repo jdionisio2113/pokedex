@@ -2,7 +2,8 @@ import {
   FETCH_POKEMON,
   RECEIVE_POKEMON,
   REQUEST_FAILED,
-  DISPLAY_NEXT_BATCH
+  DISPLAY_NEXT_BATCH,
+  UPDATE_QUERIED_POKEMON
 } from "../actions";
 
 const initialState = {
@@ -54,7 +55,7 @@ export default (state = initialState, action) => {
         pokemon_to_display: [...state.pokemon_to_display, ...batch]
       };
 
-    case "UPDATE_QUERIED_POKEMON":
+    case UPDATE_QUERIED_POKEMON:
       return {
         ...state,
         queried_pokemon: action.payload

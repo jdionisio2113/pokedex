@@ -230,18 +230,33 @@ img {
   /* margin: 1em 0; */
 }
 
-/* .show-box {
-  position: fixed;
-  overflow: hidden;
-} */
-
-/* .search-container {
+.pokemon-title {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-around;
+  text-transform: capitalize;
+}
 
-  position: fixed;
-} */
+.poke-number {
+  /* padding-top: 30px;
+  padding-bottom: 30px; */
+}
+
+.poke-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pokemon-wrapper {
+  height: 100vh;
+}
+
+.type-container {
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (min-width: 600px) {
   .pokemon-container {
     margin: 0 8em;

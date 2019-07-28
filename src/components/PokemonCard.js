@@ -21,8 +21,7 @@ function PokemonCard({ pokemon }) {
   return (
     <Link
       to={{
-        pathname: "/pokemon",
-        search: "?pokemon=" + name
+        pathname: `/pokemon/${id}`
       }}
     >
       <div className="pokedex-content">

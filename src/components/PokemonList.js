@@ -60,7 +60,7 @@ class PokemonList extends React.Component {
       document.querySelector(".scroll-up").style.display = "block";
     } else {
       document.querySelector(".scroll-up").style.display = "none";
-      document.querySelector(".load-more").style.display = "none";
+      // document.querySelector(".load-more").style.display = "none";
     }
 
     if (scrolled === scrollable) {

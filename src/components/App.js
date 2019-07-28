@@ -14,7 +14,7 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/" component={PokemonListContainer} />
-            <Route exact path="/pokemon" component={Pokemon} />
+            <Route exact path="/pokemon/:id" component={Pokemon} />
           </Switch>
         </Router>
       </div>
