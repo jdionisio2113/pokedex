@@ -16,10 +16,10 @@ class PokemonList extends React.Component {
     this.displayPokemon = this.displayPokemon.bind(this);
   }
 
-  componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll.bind(this));
-    document.querySelector(".scroll-up").style.display = "none";
-  }
+  // componentDidMount() {
+  //   window.addEventListener("scroll", this.handleScroll.bind(this));
+  //   document.querySelector(".scroll-up").style.display = "none";
+  // }
 
   handleSearch(e) {
     var value = e.target.value;
@@ -49,33 +49,33 @@ class PokemonList extends React.Component {
     }, 500);
   }
 
-  handleScroll() {
-    // Get scroll position
-    // if scroll position is above 500px, display the "scroll to top" button, otherwise don't display the button
-    const scrollable =
-      document.documentElement.scrollHeight - window.innerHeight;
-    const scrolled = window.scrollY;
+  // handleScroll() {
+  //   // Get scroll position
+  //   // if scroll position is above 500px, display the "scroll to top" button, otherwise don't display the button
+  //   const scrollable =
+  //     document.documentElement.scrollHeight - window.innerHeight;
+  //   const scrolled = window.scrollY;
 
-    if (scrolled > 500) {
-      document.querySelector(".scroll-up").style.display = "block";
-    } else {
-      document.querySelector(".scroll-up").style.display = "none";
-      // document.querySelector(".load-more").style.display = "none";
-    }
+  //   if (scrolled > 500) {
+  //     document.querySelector(".scroll-up").style.display = "block";
+  //   } else {
+  //     document.querySelector(".scroll-up").style.display = "none";
+  //     // document.querySelector(".load-more").style.display = "none";
+  //   }
 
-    if (scrolled === scrollable) {
-      this.props.displayNextBatch();
-    }
-  }
+  //   if (scrolled === scrollable) {
+  //     this.props.displayNextBatch();
+  //   }
+  // }
 
-  handleClick() {
-    if (window.pageYOffset > 200) {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-  }
+  // handleClick() {
+  //   if (window.pageYOffset > 200) {
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: "smooth"
+  //     });
+  //   }
+  // }
 
   displayPokemon() {
     // if user has an input value, display pokemon from queried_pokemon array
@@ -120,9 +120,9 @@ class PokemonList extends React.Component {
               Load More Pokémon
             </button>
           </div>
-          <button className="scroll-up" onClick={this.handleClick}>
+          {/* <button className="scroll-up" onClick={this.handleClick}>
             SCROLL UP
-          </button>
+          </button> */}
         </div>
       </div>
     );

@@ -32,9 +32,7 @@ function PokemonCard({ pokemon }) {
             src={require("../images/pokeball.svg")}
           />
           <div className="description">
-            <span>
-              <PokemonTypeContainer entry_number={id} />
-            </span>
+            <PokemonTypeContainer entry_number={id} />
             <img className="pokemon-image" src={imageUrl} />
           </div>
         </div>

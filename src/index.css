@@ -6,6 +6,15 @@ body {
 
 a {
   text-decoration: none;
+  color: white;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
 }
 
 .pokeball-logo {
@@ -246,15 +255,81 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  width: 60%;
 }
 
 .pokemon-wrapper {
+  margin: 0 1em;
   height: 100vh;
 }
 
 .type-container {
   display: flex;
   justify-content: center;
+}
+
+.stats {
+  text-transform: capitalize;
+}
+
+.progress-bar {
+  position: relative;
+  width: 1em;
+  height: 80%;
+  background-color: rgb(60, 124, 228);
+  border-radius: 1.5em;
+  color: white;
+  margin: 0 auto;
+}
+
+.stats-wrapper {
+  background-color: lightgray;
+  padding: 5px 10px;
+  border-radius: 5%;
+  /* font-size: 12px; */
+  /* display: flex;
+  text-align: center; */
+}
+
+.stats-container {
+  margin: 0 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* font-size: 0.7em; */
+}
+
+.description {
+  text-align: center;
+}
+
+/* .stats-container {
+  display: flex;
+} */
+/* .progress-bar::before {
+  content: attr(data-label);
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0.5em;
+  top: 2.6px;
+  bottom: 0.2em;
+  width: calc(var(--width, 10) * 1%); */
+/* min-width: 2rem;
+  max-width: calc(100% - 1em);
+  background-color: #069;
+  border-radius: 1em;
+  padding: 0.3em;
+} */
+
+.explore-button {
+  background-color: #e66b24;
+  color: white;
+  border-radius: 5%;
+  padding: 0.7em;
+  font-size: 1.2em;
+  display: block;
+  margin: 1em auto;
 }
 
 @media screen and (min-width: 600px) {
