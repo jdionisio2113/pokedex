@@ -53,11 +53,15 @@ class Pokemon extends React.Component {
     var id = data.id;
     if (descriptions.flavor_text_entries) {
       var text = descriptions.flavor_text_entries[1].flavor_text;
-      descriptions.flavor_text_entries.map(text => {
-        if (text.language.name === "en") {
-          console.log(text);
+
+      var filtered_entries = descriptions.flavor_text_entries.filter(text => {
+        var language = text.language.name;
+        if (language === "en") {
+          // console.log(text);
+          return text;
         }
       });
+      var english_entry = filtered_entries[0].flavor_text;
     }
 
     if (descriptions.evolution_chain) {
@@ -103,7 +107,7 @@ class Pokemon extends React.Component {
           <PokemonTypeContainer entry_number={id} />
         </div>
         <div className="description">
-          <p>{text}</p>
+          <p>{english_entry}</p>
         </div>
         <div className="stats-wrapper">
           <h3>BASE STATS</h3>
