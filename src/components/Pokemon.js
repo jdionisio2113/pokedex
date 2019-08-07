@@ -54,14 +54,20 @@ class Pokemon extends React.Component {
     if (descriptions.flavor_text_entries) {
       var text = descriptions.flavor_text_entries[1].flavor_text;
 
-      var filtered_entries = descriptions.flavor_text_entries.filter(text => {
-        var language = text.language.name;
-        if (language === "en") {
-          // console.log(text);
-          return text;
+      // Loop through descriptions.flavor_text_entries
+
+      // Once you get the first english entry, store the entry
+      // in a variable and stop the loop from running
+
+      var { flavor_text_entries } = descriptions;
+      var english_entry = null;
+      for (let i = 0; i < flavor_text_entries.length && !english_entry; i++) {
+        let text_entry = flavor_text_entries[i];
+        if (text_entry.language.name === "en") {
+          //store text_entry in variable english_entry
+          english_entry = text_entry.flavor_text;
         }
-      });
-      var english_entry = filtered_entries[0].flavor_text;
+      }
     }
 
     if (descriptions.evolution_chain) {
@@ -73,12 +79,12 @@ class Pokemon extends React.Component {
         var baseForm = res.data.chain.species.name;
         var secondaryForm = res.data.chain.evolves_to[0].species.name;
         var baseUrl = res.data.chain.species.url;
-        // console.log(secondaryForm);
+        // console.log(baseUrl);
 
-        // axios.get(baseUrl).then(res => {
-        //   console.log(res.data.id);
-        //   var baseFormId = res.data.id;
-        // });
+        axios.get(baseUrl).then(res => {
+          var baseFormId = res.data.id;
+          console.log(baseFormId);
+        });
       });
     }
 
