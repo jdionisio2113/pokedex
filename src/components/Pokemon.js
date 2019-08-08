@@ -70,23 +70,23 @@ class Pokemon extends React.Component {
       }
     }
 
-    if (descriptions.evolution_chain) {
-      var url = descriptions.evolution_chain.url;
-      // console.log(url);
-      axios.get(url).then(res => {
-        // console.log(res.data);
+    // if (descriptions.evolution_chain) {
+    //   var url = descriptions.evolution_chain.url;
+    //   // console.log(url);
+    //   axios.get(url).then(res => {
+    //     // console.log(res.data);
 
-        var baseForm = res.data.chain.species.name;
-        var secondaryForm = res.data.chain.evolves_to[0].species.name;
-        var baseUrl = res.data.chain.species.url;
-        // console.log(baseUrl);
+    //     var baseForm = res.data.chain.species.name;
+    //     // var secondaryForm = res.data.chain.evolves_to[0].species.name;
+    //     var baseUrl = res.data.chain.species.url;
+    //     // console.log(baseUrl);
 
-        axios.get(baseUrl).then(res => {
-          var baseFormId = res.data.id;
-          console.log(baseFormId);
-        });
-      });
-    }
+    //     axios.get(baseUrl).then(res => {
+    //       var baseFormId = res.data.id;
+    //       // console.log(baseFormId);
+    //     });
+    //   });
+    // }
 
     var format_picture_id = function(num) {
       if (num <= 9) {
@@ -120,12 +120,54 @@ class Pokemon extends React.Component {
           {stats.map((stat, index) => {
             var statNumber = stat.base_stat;
             var stat_title = stat.stat.name;
+            var speed = "";
+            var specialDefense = "";
+            var specialAttack = "";
+            var defense = "";
+            var attack = "";
+            var hp = "";
+
+            // console.log(stats);
+
+            switch (stat_title) {
+              case "speed":
+                speed = statNumber + "px";
+
+              case "special-defense":
+                specialDefense = statNumber + "px";
+
+              case "special-attack":
+                specialAttack = statNumber + "px";
+
+              case "defense":
+                defense = statNumber + "px";
+
+              case "attack":
+                attack = statNumber + "px";
+
+              case "hp":
+                hp = statNumber + "px";
+
+              default:
+            }
 
             return (
               <div className="stats-container" key={index}>
-                {/* <div className="progress-bar" style={{ width: statNumber }} /> */}
                 <p className="stats">{stat_title}:</p>
-                {statNumber}
+                {/* {statNumber} */}
+                <div className="meter">
+                  <span
+                    className="width"
+                    style={{
+                      width: speed,
+                      width: specialDefense,
+                      width: specialAttack,
+                      width: attack,
+                      width: defense,
+                      width: hp
+                    }}
+                  />
+                </div>
               </div>
             );
           })}
