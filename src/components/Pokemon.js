@@ -3,6 +3,7 @@ import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import jsonPlaceholder from "../config/jsonPlaceholder";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { all, get } from "axios";
 
 class Pokemon extends React.Component {
   constructor(props) {
@@ -13,10 +14,14 @@ class Pokemon extends React.Component {
       data: {},
       stats: [],
       descriptions: {},
+      evolutionpic1: "",
+      evolutionpic2: "",
+      evolutionpic3: "",
       error: false
     };
 
     this.renderMarkup = this.renderMarkup.bind(this);
+    this.evolutionChain = this.evolutionChain.bind(this);
   }
 
   componentDidMount() {
@@ -47,8 +52,67 @@ class Pokemon extends React.Component {
       });
   }
 
+  evolutionChain() {
+    const { descriptions, evolutionpic1 } = this.state;
+    if (descriptions.evolution_chain) {
+      var url = descriptions.evolution_chain.url;
+      // console.log(url);
+      axios.get(url).then(res => {
+        // console.log(res.data);
+        var baseForm = res.data.chain.species.url;
+        var secondaryForm = res.data.chain.evolves_to[0].species.url;
+        var finalForm = res.data.chain.evolves_to[0].evolves_to[0].species.url;
+
+        var baseUrl = res.data.chain.species.url;
+        // console.log(baseForm, secondaryForm, finalForm);
+
+        all([get(baseForm), get(secondaryForm), get(finalForm)]).then(res => {
+          var base_Id = res[0].data.id;
+          var secondary_Id = res[1].data.id;
+          var final_Id = res[2].data.id;
+          // console.log(base_Id, secondary_Id, final_Id);
+
+          var format_picture_id = function(num) {
+            if (num <= 9) {
+              return `00${num}`;
+            } else if (num >= 10 && num <= 99) {
+              return `0${num}`;
+            } else {
+              return num;
+            }
+          };
+
+          var evo1 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+            base_Id
+          )}.png`;
+          var evo2 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+            secondary_Id
+          )}.png`;
+          var evo3 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+            final_Id
+          )}.png`;
+
+          this.setState({
+            evolutionpic1: evo1,
+            evolutionpic2: evo2,
+            evolutionpic3: evo3
+          });
+        });
+      });
+    }
+
+    return (
+      <div className="evo_chart">
+        <h2 className="evo_title">Evolutions</h2>
+        <img className="evolution-image" src={this.state.evolutionpic1} />
+        <img className="evolution-image" src={this.state.evolutionpic2} />
+        <img className="evolution-image" src={this.state.evolutionpic3} />
+      </div>
+    );
+  }
+
   renderMarkup() {
-    const { data, stats, descriptions, evolutionChain } = this.state;
+    const { data, stats, descriptions } = this.state;
     var name = data.name;
     var id = data.id;
     if (descriptions.flavor_text_entries) {
@@ -70,24 +134,6 @@ class Pokemon extends React.Component {
       }
     }
 
-    // if (descriptions.evolution_chain) {
-    //   var url = descriptions.evolution_chain.url;
-    //   // console.log(url);
-    //   axios.get(url).then(res => {
-    //     // console.log(res.data);
-
-    //     var baseForm = res.data.chain.species.name;
-    //     // var secondaryForm = res.data.chain.evolves_to[0].species.name;
-    //     var baseUrl = res.data.chain.species.url;
-    //     // console.log(baseUrl);
-
-    //     axios.get(baseUrl).then(res => {
-    //       var baseFormId = res.data.id;
-    //       // console.log(baseFormId);
-    //     });
-    //   });
-    // }
-
     var format_picture_id = function(num) {
       if (num <= 9) {
         return `00${num}`;
@@ -104,16 +150,18 @@ class Pokemon extends React.Component {
 
     return (
       <div className="poke-wrapper">
-        <div className="pokemon-title">
-          <h1>{name}</h1>
-          <h3 className="poke-number">#{id}</h3>
-        </div>
-        <img className="poke-image" src={imageUrl} />
-        <div className="type-container">
-          <PokemonTypeContainer entry_number={id} />
-        </div>
-        <div className="description">
-          <p>{english_entry}</p>
+        <div className="profile-background">
+          <div className="pokemon-title">
+            <h1>{name}</h1>
+            <h3 className="poke-number">#{id}</h3>
+          </div>
+          <img className="poke-image" src={imageUrl} />
+          <div className="type-container">
+            <PokemonTypeContainer entry_number={id} />
+          </div>
+          <div className="description">
+            <p>{english_entry}</p>
+          </div>
         </div>
         <div className="stats-wrapper">
           <h3>BASE STATS</h3>
@@ -172,6 +220,7 @@ class Pokemon extends React.Component {
             );
           })}
         </div>
+        {this.evolutionChain()}
         <button className="explore-button">
           <Link
             to={{
@@ -190,6 +239,7 @@ class Pokemon extends React.Component {
     return (
       <div className="pokemon-wrapper">
         {isLoading ? <p>loading</p> : this.renderMarkup()}
+        {/* {this.evolutionChain()} */}
       </div>
     );
     // return null;

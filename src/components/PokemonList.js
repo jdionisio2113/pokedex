@@ -67,8 +67,8 @@ class PokemonList extends React.Component {
     return (
       <div className="pokedex-container">
         <div className="input-container">
-          <h1 className="logo">POKEDÉX</h1>
-          <form>
+          <form className="nav">
+            <h1 className="logo">POKEDÉX</h1>
             <input
               type="text"
               name="Search Pokemon"
