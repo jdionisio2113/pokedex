@@ -24,8 +24,17 @@ class Pokemon extends React.Component {
     this.evolutionChain = this.evolutionChain.bind(this);
   }
 
+  componentDidUpdate(prevState) {
+    if (prevState.evolutionpic1 === (this.state && this.state.evolutionpic1)) {
+      // document.querySelector(".evoChain").innerHTML = this.evolutionChain();
+      this.evolutionChain();
+    }
+  }
+
   componentDidMount() {
     const { id } = this.props.match.params;
+
+    // this.renderMarkup();
 
     this.setState({
       isLoading: true
@@ -53,7 +62,7 @@ class Pokemon extends React.Component {
   }
 
   evolutionChain() {
-    const { descriptions, evolutionpic1 } = this.state;
+    const { descriptions } = this.state;
     if (descriptions.evolution_chain) {
       var url = descriptions.evolution_chain.url;
       // console.log(url);
@@ -62,6 +71,8 @@ class Pokemon extends React.Component {
         var baseForm = res.data.chain.species.url;
         var secondaryForm = res.data.chain.evolves_to[0].species.url;
         var finalForm = res.data.chain.evolves_to[0].evolves_to[0].species.url;
+
+        console.log(baseForm);
 
         var baseUrl = res.data.chain.species.url;
         // console.log(baseForm, secondaryForm, finalForm);
@@ -88,25 +99,34 @@ class Pokemon extends React.Component {
           var evo2 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
             secondary_Id
           )}.png`;
+
           var evo3 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
             final_Id
           )}.png`;
 
-          this.setState({
-            evolutionpic1: evo1,
-            evolutionpic2: evo2,
-            evolutionpic3: evo3
-          });
+          // this.setState({
+          //   evolutionpic1: evo1,
+          //   evolutionpic2: evo2,
+          //   evolutionpic3: evo3
+          // });
+
+          // console.log(evo1);
         });
       });
     }
 
     return (
-      <div className="evo_chart">
+      <div className="evo-container">
+        {/* {this.state.evolutionpic1 ? ( */}
         <h2 className="evo_title">Evolutions</h2>
-        <img className="evolution-image" src={this.state.evolutionpic1} />
-        <img className="evolution-image" src={this.state.evolutionpic2} />
-        <img className="evolution-image" src={this.state.evolutionpic3} />
+        <div className="evo_chart">
+          <img className="evolution-image" src={this.state.evolutionpic1} />
+          <img className="evolution-image" src={this.state.evolutionpic2} />
+          {/* {this.state.evolutionpic3 ? ( */}
+          <img className="evolution-image" src={this.state.evolutionpic3} />
+          {/* ) : null} */}
+        </div>
+        {/* ) : null} */}
       </div>
     );
   }
@@ -150,77 +170,84 @@ class Pokemon extends React.Component {
 
     return (
       <div className="poke-wrapper">
-        <div className="profile-background">
-          <div className="pokemon-title">
-            <h1>{name}</h1>
-            <h3 className="poke-number">#{id}</h3>
-          </div>
-          <img className="poke-image" src={imageUrl} />
-          <div className="type-container">
-            <PokemonTypeContainer entry_number={id} />
-          </div>
-          <div className="description">
-            <p>{english_entry}</p>
-          </div>
+        <div className="pokemon-title">
+          <h1>{name}</h1>
+          <h3 className="poke-number">#{id}</h3>
         </div>
-        <div className="stats-wrapper">
-          <h3>BASE STATS</h3>
-          {stats.map((stat, index) => {
-            var statNumber = stat.base_stat;
-            var stat_title = stat.stat.name;
-            var speed = "";
-            var specialDefense = "";
-            var specialAttack = "";
-            var defense = "";
-            var attack = "";
-            var hp = "";
+        <div className="profile">
+          <div className="column1">
+            <img className="poke-image" src={imageUrl} />
+            <div className="type-container">
+              <PokemonTypeContainer entry_number={id} />
+            </div>
 
-            // console.log(stats);
+            <div className="description">
+              <p>{english_entry}</p>
+            </div>
+          </div>
+          <div className="description-container">
+            <div className="stats-wrapper">
+              <h3>BASE STATS</h3>
+              {stats.map((stat, index) => {
+                var statNumber = stat.base_stat;
+                var stat_title = stat.stat.name;
+                var speed = "";
+                var specialDefense = "";
+                var specialAttack = "";
+                var defense = "";
+                var attack = "";
+                var hp = "";
 
-            switch (stat_title) {
-              case "speed":
-                speed = statNumber + "px";
+                // console.log(stats);
 
-              case "special-defense":
-                specialDefense = statNumber + "px";
+                switch (stat_title) {
+                  case "speed":
+                    speed = statNumber + "px";
 
-              case "special-attack":
-                specialAttack = statNumber + "px";
+                  case "special-defense":
+                    specialDefense = statNumber + "px";
 
-              case "defense":
-                defense = statNumber + "px";
+                  case "special-attack":
+                    specialAttack = statNumber + "px";
 
-              case "attack":
-                attack = statNumber + "px";
+                  case "defense":
+                    defense = statNumber + "px";
 
-              case "hp":
-                hp = statNumber + "px";
+                  case "attack":
+                    attack = statNumber + "px";
 
-              default:
-            }
+                  case "hp":
+                    hp = statNumber + "px";
 
-            return (
-              <div className="stats-container" key={index}>
-                <p className="stats">{stat_title}:</p>
-                {/* {statNumber} */}
-                <div className="meter">
-                  <span
-                    className="width"
-                    style={{
-                      width: speed,
-                      width: specialDefense,
-                      width: specialAttack,
-                      width: attack,
-                      width: defense,
-                      width: hp
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+                  default:
+                }
+
+                return (
+                  <div className="stats-container" key={index}>
+                    <p className="stats">{stat_title}:</p>
+                    {/* {statNumber} */}
+                    <div className="meter">
+                      <span
+                        className="width"
+                        style={{
+                          width: speed,
+                          width: specialDefense,
+                          width: specialAttack,
+                          width: attack,
+                          width: defense,
+                          width: hp
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
         {this.evolutionChain()}
+        <div className="evoChain" />
+
         <button className="explore-button">
           <Link
             to={{
@@ -233,9 +260,8 @@ class Pokemon extends React.Component {
       </div>
     );
   }
-
   render() {
-    const { isLoading, data, error, descriptions } = this.state;
+    const { isLoading, data, error, descriptions, evolutionpic1 } = this.state;
     return (
       <div className="pokemon-wrapper">
         {isLoading ? <p>loading</p> : this.renderMarkup()}

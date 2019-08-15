@@ -283,7 +283,7 @@ img {
 .stats-wrapper {
   background-color: lightgray;
   padding: 5px 10px;
-  border-radius: 5%;
+  border-radius: 10px;
   margin: 0 1em;
   /* font-size: 12px; */
   /* display: flex;
@@ -338,7 +338,7 @@ img {
   margin: 1em auto;
 }
 
-.profile-background {
+.profile {
   /* background-color: blue; */
 }
 
@@ -356,7 +356,7 @@ img {
 }
 
 .evo_title {
-  color: white;
+  color: black;
 }
 
 .evo_chart {
@@ -366,7 +366,7 @@ img {
   margin: 1.2em;
   background-color: #887070;
   /* padding: 1em 0; */
-  border-radius: 5%;
+  border-radius: 10px;
   background: #424242 url(./images/container_bg.png);
 }
 
@@ -383,5 +383,59 @@ img {
 
   .scroll-up:hover {
     opacity: 1;
+  }
+
+  .pokemon-title {
+    justify-content: center;
+    font-size: 2em;
+  }
+
+  .poke-number {
+    padding-left: 30px;
+    /* font-size: 1em; */
+  }
+
+  .poke-image {
+    /* width: 100%; */
+    background-color: whitesmoke;
+    /* display: block; */
+    /* float: left;  */
+  }
+
+  .description-container {
+    width: 50%;
+    float: right;
+  }
+
+  .profile {
+    /* display: flex;
+    justify-content: space-evenly; */
+  }
+
+  .column1 {
+    /* flex-direction: column; */
+    float: left;
+    width: 50%;
+  }
+
+  .evo_chart {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .evolution-image {
+    width: 15%;
+  }
+
+  .evo-container {
+    clear: both;
+  }
+
+  .description p {
+    font-size: 1.2em;
+  }
+
+  .stats-container {
+    margin: 2em 0.5em;
   }
 }
