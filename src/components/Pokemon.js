@@ -24,13 +24,6 @@ class Pokemon extends React.Component {
     this.evolutionChain = this.evolutionChain.bind(this);
   }
 
-  componentDidUpdate(prevState) {
-    if (prevState.evolutionpic1 === (this.state && this.state.evolutionpic1)) {
-      // document.querySelector(".evoChain").innerHTML = this.evolutionChain();
-      this.evolutionChain();
-    }
-  }
-
   componentDidMount() {
     const { id } = this.props.match.params;
 
@@ -59,6 +52,13 @@ class Pokemon extends React.Component {
       .catch(err => {
         this.setState({ error: true });
       });
+  }
+
+  componentDidUpdate(prevState) {
+    if (prevState.descriptions !== prevState && this.state.descriptions) {
+      // console.log("hello");
+      // this.evolutionChain();
+    }
   }
 
   evolutionChain() {
@@ -104,11 +104,11 @@ class Pokemon extends React.Component {
             final_Id
           )}.png`;
 
-          // this.setState({
-          //   evolutionpic1: evo1,
-          //   evolutionpic2: evo2,
-          //   evolutionpic3: evo3
-          // });
+          this.setState({
+            evolutionpic1: evo1,
+            evolutionpic2: evo2,
+            evolutionpic3: evo3
+          });
 
           // console.log(evo1);
         });
@@ -245,8 +245,7 @@ class Pokemon extends React.Component {
             </div>
           </div>
         </div>
-        {this.evolutionChain()}
-        <div className="evoChain" />
+        {/* {this.evolutionChain()} */}
 
         <button className="explore-button">
           <Link
@@ -265,10 +264,8 @@ class Pokemon extends React.Component {
     return (
       <div className="pokemon-wrapper">
         {isLoading ? <p>loading</p> : this.renderMarkup()}
-        {/* {this.evolutionChain()} */}
       </div>
     );
-    // return null;
   }
 }
 

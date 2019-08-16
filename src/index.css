@@ -370,6 +370,10 @@ img {
   background: #424242 url(./images/container_bg.png);
 }
 
+.description p {
+  font-size: 1.2em;
+}
+
 @media screen and (min-width: 600px) {
   .pokemon-container {
     margin: 0 8em;
