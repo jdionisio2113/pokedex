@@ -100,7 +100,7 @@ class PokemonType extends React.Component {
   }
 
   render() {
-    return <div>{this.renderType()}</div>;
+    return <div className="type-box">{this.renderType()}</div>;
   }
 }
 

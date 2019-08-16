@@ -374,6 +374,24 @@ img {
   font-size: 1.2em;
 }
 
+.evo_name {
+  color: white;
+  margin: 0;
+}
+
+.evolution_box {
+  text-align: center;
+  margin: 1em 0;
+}
+
+.evo_chart p {
+  width: 30%;
+}
+
+.type-box {
+  margin: 0 auto;
+}
+
 @media screen and (min-width: 600px) {
   .pokemon-container {
     margin: 0 8em;

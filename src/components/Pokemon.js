@@ -14,31 +14,90 @@ class Pokemon extends React.Component {
       data: {},
       stats: [],
       descriptions: {},
-      evolutionpic1: "",
-      evolutionpic2: "",
-      evolutionpic3: "",
+      evolutionChain: [],
+      evolutionName: [],
+      evolutionId: [],
       error: false
     };
 
     this.renderMarkup = this.renderMarkup.bind(this);
-    this.evolutionChain = this.evolutionChain.bind(this);
+    // this.evolutionChain = this.evolutionChain.bind(this);
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    // this.renderMarkup();
-
     this.setState({
       isLoading: true
     });
 
-    jsonPlaceholder.get(`/pokemon-species/${id}`).then(res => {
-      this.setState({
-        isLoading: false,
-        descriptions: res.data
+    jsonPlaceholder
+      .get(`/pokemon-species/${id}`)
+      .then(res => {
+        this.setState({
+          isLoading: false,
+          descriptions: res.data
+        });
+
+        return res.data;
+      })
+
+      .then(data => {
+        if (data.evolution_chain.url) {
+          var self = this;
+          axios.get(data.evolution_chain.url).then(function(res) {
+            console.log(res.data);
+            var baseForm = res.data.chain.species.url;
+            var secondaryForm = res.data.chain.evolves_to[0].species.url;
+            var finalForm =
+              res.data.chain.evolves_to[0].evolves_to[0].species.url;
+
+            var baseUrl = res.data.chain.species.url;
+
+            all([get(baseForm), get(secondaryForm), get(finalForm)]).then(
+              res => {
+                var base_Id = res[0].data.id;
+                var secondary_Id = res[1].data.id;
+                var final_Id = res[2].data.id;
+
+                // console.log(res[0].data.name);
+                var baseName = res[0].data.name;
+                var secondaryName = res[1].data.name;
+                var finalName = res[2].data.name;
+
+                var format_picture_id = function(num) {
+                  if (num <= 9) {
+                    return `00${num}`;
+                  } else if (num >= 10 && num <= 99) {
+                    return `0${num}`;
+                  } else {
+                    return num;
+                  }
+                };
+
+                var evo1 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+                  base_Id
+                )}.png`;
+                var evo2 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+                  secondary_Id
+                )}.png`;
+
+                var evo3 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+                  final_Id
+                )}.png`;
+
+                console.log(evo2);
+
+                self.setState({
+                  evolutionChain: [evo1, evo2, evo3],
+                  evolutionName: [baseName, secondaryName, finalName],
+                  evolutionId: [base_Id, secondary_Id, final_Id]
+                });
+              }
+            );
+          });
+        }
       });
-    });
 
     jsonPlaceholder
       .get(`/pokemon/${id}`)
@@ -54,79 +113,42 @@ class Pokemon extends React.Component {
       });
   }
 
-  componentDidUpdate(prevState) {
-    if (prevState.descriptions !== prevState && this.state.descriptions) {
-      // console.log("hello");
-      // this.evolutionChain();
-    }
-  }
-
   evolutionChain() {
-    const { descriptions } = this.state;
-    if (descriptions.evolution_chain) {
-      var url = descriptions.evolution_chain.url;
-      // console.log(url);
-      axios.get(url).then(res => {
-        // console.log(res.data);
-        var baseForm = res.data.chain.species.url;
-        var secondaryForm = res.data.chain.evolves_to[0].species.url;
-        var finalForm = res.data.chain.evolves_to[0].evolves_to[0].species.url;
-
-        console.log(baseForm);
-
-        var baseUrl = res.data.chain.species.url;
-        // console.log(baseForm, secondaryForm, finalForm);
-
-        all([get(baseForm), get(secondaryForm), get(finalForm)]).then(res => {
-          var base_Id = res[0].data.id;
-          var secondary_Id = res[1].data.id;
-          var final_Id = res[2].data.id;
-          // console.log(base_Id, secondary_Id, final_Id);
-
-          var format_picture_id = function(num) {
-            if (num <= 9) {
-              return `00${num}`;
-            } else if (num >= 10 && num <= 99) {
-              return `0${num}`;
-            } else {
-              return num;
-            }
-          };
-
-          var evo1 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-            base_Id
-          )}.png`;
-          var evo2 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-            secondary_Id
-          )}.png`;
-
-          var evo3 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-            final_Id
-          )}.png`;
-
-          this.setState({
-            evolutionpic1: evo1,
-            evolutionpic2: evo2,
-            evolutionpic3: evo3
-          });
-
-          // console.log(evo1);
-        });
-      });
-    }
-
     return (
       <div className="evo-container">
-        {/* {this.state.evolutionpic1 ? ( */}
         <h2 className="evo_title">Evolutions</h2>
         <div className="evo_chart">
-          <img className="evolution-image" src={this.state.evolutionpic1} />
-          <img className="evolution-image" src={this.state.evolutionpic2} />
-          {/* {this.state.evolutionpic3 ? ( */}
-          <img className="evolution-image" src={this.state.evolutionpic3} />
-          {/* ) : null} */}
+          <div className="evolution_box">
+            <img
+              className="evolution-image"
+              src={this.state.evolutionChain[0]}
+            />
+            <h2 className="evo_name">{this.state.evolutionName[0]}</h2>
+            <span>
+              <PokemonTypeContainer entry_number={this.state.evolutionId[0]} />
+            </span>
+          </div>
+          <div className="evolution_box">
+            <img
+              className="evolution-image"
+              src={this.state.evolutionChain[1]}
+            />
+            <h2 className="evo_name">{this.state.evolutionName[1]}</h2>
+            <span>
+              <PokemonTypeContainer entry_number={this.state.evolutionId[1]} />
+            </span>
+          </div>
+          <div className="evolution_box">
+            <img
+              className="evolution-image"
+              src={this.state.evolutionChain[2]}
+            />
+            <h2 className="evo_name">{this.state.evolutionName[2]}</h2>
+            <span>
+              <PokemonTypeContainer entry_number={this.state.evolutionId[2]} />
+            </span>
+          </div>
         </div>
-        {/* ) : null} */}
       </div>
     );
   }
@@ -245,6 +267,10 @@ class Pokemon extends React.Component {
             </div>
           </div>
         </div>
+        {this.state.evolutionChain.length > 0
+          ? // <div>display evolution</div>
+            this.evolutionChain()
+          : null}
         {/* {this.evolutionChain()} */}
 
         <button className="explore-button">
