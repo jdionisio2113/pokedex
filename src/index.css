@@ -370,6 +370,10 @@ img {
   background: #424242 url(./images/container_bg.png);
 }
 
+.evo_chart p {
+  margin: 0 auto;
+}
+
 .description p {
   font-size: 1.2em;
 }
@@ -377,6 +381,7 @@ img {
 .evo_name {
   color: white;
   margin: 0;
+  text-transform: capitalize;
 }
 
 .evolution_box {
@@ -390,6 +395,10 @@ img {
 
 .type-box {
   margin: 0 auto;
+}
+
+.fa-chevron-down {
+  color: white;
 }
 
 @media screen and (min-width: 600px) {

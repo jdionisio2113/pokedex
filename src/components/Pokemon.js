@@ -21,7 +21,6 @@ class Pokemon extends React.Component {
     };
 
     this.renderMarkup = this.renderMarkup.bind(this);
-    // this.evolutionChain = this.evolutionChain.bind(this);
   }
 
   componentDidMount() {
@@ -128,6 +127,7 @@ class Pokemon extends React.Component {
               <PokemonTypeContainer entry_number={this.state.evolutionId[0]} />
             </span>
           </div>
+          <i class="fa fa-chevron-down fa-3x" />
           <div className="evolution_box">
             <img
               className="evolution-image"
@@ -138,6 +138,7 @@ class Pokemon extends React.Component {
               <PokemonTypeContainer entry_number={this.state.evolutionId[1]} />
             </span>
           </div>
+          <i class="fa fa-chevron-down fa-3x" />
           <div className="evolution_box">
             <img
               className="evolution-image"
