@@ -16,7 +16,7 @@ class PokemonTypeContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="type-wrapper">
         <PokemonType pokemonInfo={this.props.pokemonInfo} />
       </div>
     );

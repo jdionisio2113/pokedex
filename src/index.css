@@ -46,7 +46,7 @@ li {
 .pokemon-name {
   color: #313131;
   text-transform: capitalize;
-  margin: 0;
+  margin: 0 0 0 15px;
 }
 
 .pokedex-content {
@@ -99,110 +99,93 @@ img {
 
 .fire-type {
   background-color: rgba(255, 147, 10, 0.8);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .grass-type {
   background-color: rgba(91, 217, 120, 0.8);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .poison-type {
   background-color: rgba(216, 156, 240, 0.8);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .water-type {
   background-color: rgba(59, 112, 227, 0.7);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .flying-type {
   background: linear-gradient(to top, #bdb9b8 50%, #3dc7ef 50%);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .ground-type {
   background: linear-gradient(to top, #ab9842 50%, #f7de3f 50%);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .dragon-type {
   background: linear-gradient(to top, #f16e57 50%, #53a4cf 50%);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .bug-type {
   background-color: rgba(58, 120, 61, 0.8);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .normal-type {
   background-color: rgba(164, 172, 175);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .electric-type {
   background-color: rgba(238, 213, 53, 0.8);
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .fairy-type {
   background-color: #fdb9e9;
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .fighting-type {
   background-color: #d56723;
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .psychic-type {
   background-color: #f366b9;
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .rock-type {
   background-color: #a38c21;
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .steel-type {
   background-color: #9eb7b8;
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .ice-type {
   background-color: #51c4e7;
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .ghost-type {
   background-color: #7b62a3;
   padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .dark-type {
   background-color: #707070;
-  padding: 0 5px;
-  border-radius: 15%;
+  border-radius: 10px;
 }
 
 .scroll-up {
@@ -298,6 +281,12 @@ img {
   text-align: center;
 }
 
+/* .type-wrapper {
+  width: 30%;
+  margin: 0 auto;
+  text-align: center;
+} */
+
 .meter {
   height: 10px;
   position: relative;
@@ -336,10 +325,7 @@ img {
   font-size: 1.2em;
   display: block;
   margin: 1em auto;
-}
-
-.profile {
-  /* background-color: blue; */
+  clear: both;
 }
 
 .poke-wrapper {
@@ -347,7 +333,7 @@ img {
 }
 
 .evolution-image {
-  width: 40%;
+  width: 50%;
   border-radius: 50%;
   background-color: #616161;
   border: 6px solid #ffff;
@@ -356,32 +342,43 @@ img {
 }
 
 .evo_title {
-  color: black;
+  color: white;
+  text-align: center;
+  padding: 0.5em;
+  font-size: 2.6em;
+  margin: 0;
+}
+
+.evo_wrapper {
+  background-color: #887070;
+
+  border-radius: 10px;
+  background: #424242 url(./images/container_bg.png);
 }
 
 .evo_chart {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   margin: 1.2em;
-  background-color: #887070;
-  /* padding: 1em 0; */
-  border-radius: 10px;
-  background: #424242 url(./images/container_bg.png);
 }
 
 .evo_chart p {
   margin: 0 auto;
 }
 
-.description p {
+.info {
   font-size: 1.2em;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .evo_name {
   color: white;
   margin: 0;
   text-transform: capitalize;
+  font-size: 2em;
 }
 
 .evolution_box {
@@ -389,16 +386,22 @@ img {
   margin: 1em 0;
 }
 
-.evo_chart p {
-  width: 30%;
-}
-
 .type-box {
-  margin: 0 auto;
+  /* display: flex;
+  flex-wrap: wrap;
+  flex-direction: row; */
+  /* text-align: center; */
+  /* width: 30%; */
+  margin: 0;
 }
 
 .fa-chevron-down {
   color: white;
+}
+
+.evo-container {
+  clear: both;
+  padding-top: 2em;
 }
 
 @media screen and (min-width: 600px) {
@@ -427,7 +430,7 @@ img {
   }
 
   .poke-image {
-    /* width: 100%; */
+    width: 45%;
     background-color: whitesmoke;
     /* display: block; */
     /* float: left;  */
@@ -438,35 +441,37 @@ img {
     float: right;
   }
 
-  .profile {
-    /* display: flex;
-    justify-content: space-evenly; */
+  .fa-chevron-down {
+    transform: rotate(-90deg);
   }
-
   .column1 {
-    /* flex-direction: column; */
     float: left;
     width: 50%;
+    /* background-color: #887070; */
+    padding: 2em 0;
+    border-radius: 10px;
+    background: white url(./images/container_bg.png);
   }
 
   .evo_chart {
     flex-direction: row;
     justify-content: center;
+    margin: 0;
   }
 
   .evolution-image {
-    width: 15%;
+    width: 70%;
   }
 
-  .evo-container {
-    clear: both;
-  }
-
-  .description p {
-    font-size: 1.2em;
+  .evolution_box {
+    margin: 1em 2em;
   }
 
   .stats-container {
     margin: 2em 0.5em;
+  }
+
+  .poke-wrapper {
+    margin: 0 8em;
   }
 }

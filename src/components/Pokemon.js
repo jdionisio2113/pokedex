@@ -16,7 +16,8 @@ class Pokemon extends React.Component {
       descriptions: {},
       evolutionChain: [],
       evolutionName: [],
-      evolutionId: [],
+      noEvo: "",
+
       error: false
     };
 
@@ -40,60 +41,48 @@ class Pokemon extends React.Component {
 
         return res.data;
       })
-
       .then(data => {
         if (data.evolution_chain.url) {
-          var self = this;
-          axios.get(data.evolution_chain.url).then(function(res) {
-            console.log(res.data);
+          axios.get(data.evolution_chain.url).then(res => {
             var baseForm = res.data.chain.species.url;
-            var secondaryForm = res.data.chain.evolves_to[0].species.url;
-            var finalForm =
-              res.data.chain.evolves_to[0].evolves_to[0].species.url;
 
-            var baseUrl = res.data.chain.species.url;
+            var evolution_chain;
+            (function foo(obj, arr) {
+              var collection = arr ? arr : [];
+              // var x = obj.evolves_to.map(res => {
+              //   console.log(res);
+              // });
 
-            all([get(baseForm), get(secondaryForm), get(finalForm)]).then(
-              res => {
-                var base_Id = res[0].data.id;
-                var secondary_Id = res[1].data.id;
-                var final_Id = res[2].data.id;
-
-                // console.log(res[0].data.name);
-                var baseName = res[0].data.name;
-                var secondaryName = res[1].data.name;
-                var finalName = res[2].data.name;
-
-                var format_picture_id = function(num) {
-                  if (num <= 9) {
-                    return `00${num}`;
-                  } else if (num >= 10 && num <= 99) {
-                    return `0${num}`;
-                  } else {
-                    return num;
-                  }
-                };
-
-                var evo1 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-                  base_Id
-                )}.png`;
-                var evo2 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-                  secondary_Id
-                )}.png`;
-
-                var evo3 = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
-                  final_Id
-                )}.png`;
-
-                console.log(evo2);
-
-                self.setState({
-                  evolutionChain: [evo1, evo2, evo3],
-                  evolutionName: [baseName, secondaryName, finalName],
-                  evolutionId: [base_Id, secondary_Id, final_Id]
+              if (obj.evolves_to && obj.evolves_to.length > 0) {
+                obj.evolves_to.map(item => {
+                  collection.push(item);
+                  foo(item, collection);
+                });
+              } else {
+                evolution_chain = collection.map(function(item) {
+                  // console.log(item);
+                  return get(item.species.url);
                 });
               }
-            );
+
+              if (obj.evolves_to === undefined || obj.evolves_to.length == 0) {
+                return console.log("This pokémon has no evolutions");
+              } else {
+                return null;
+              }
+            })(res.data.chain);
+
+            var evolution_chain_strings = [get(baseForm), ...evolution_chain];
+            all(evolution_chain_strings)
+              .then(data => {
+                this.setState({
+                  evolutionChain: data
+                });
+                console.log(this.state.evolutionChain);
+              })
+              .catch(function(err) {
+                console.warn(err);
+              });
           });
         }
       });
@@ -113,41 +102,43 @@ class Pokemon extends React.Component {
   }
 
   evolutionChain() {
+    // console.log(this.state.evolutionId);
+    // console.log(this.state.evolutionChain);
     return (
       <div className="evo-container">
-        <h2 className="evo_title">Evolutions</h2>
-        <div className="evo_chart">
-          <div className="evolution_box">
-            <img
-              className="evolution-image"
-              src={this.state.evolutionChain[0]}
-            />
-            <h2 className="evo_name">{this.state.evolutionName[0]}</h2>
-            <span>
-              <PokemonTypeContainer entry_number={this.state.evolutionId[0]} />
-            </span>
-          </div>
-          <i class="fa fa-chevron-down fa-3x" />
-          <div className="evolution_box">
-            <img
-              className="evolution-image"
-              src={this.state.evolutionChain[1]}
-            />
-            <h2 className="evo_name">{this.state.evolutionName[1]}</h2>
-            <span>
-              <PokemonTypeContainer entry_number={this.state.evolutionId[1]} />
-            </span>
-          </div>
-          <i class="fa fa-chevron-down fa-3x" />
-          <div className="evolution_box">
-            <img
-              className="evolution-image"
-              src={this.state.evolutionChain[2]}
-            />
-            <h2 className="evo_name">{this.state.evolutionName[2]}</h2>
-            <span>
-              <PokemonTypeContainer entry_number={this.state.evolutionId[2]} />
-            </span>
+        <div className="evo_wrapper">
+          <h2 className="evo_title">Evolutions</h2>
+          <div className="evo_chart">
+            {this.state.evolutionChain.map(res => {
+              var evo_id = res.data.id;
+              var evo_name = res.data.name;
+              var format_picture_id = function(num) {
+                if (num <= 9) {
+                  return `00${num}`;
+                } else if (num >= 10 && num <= 99) {
+                  return `0${num}`;
+                } else {
+                  return num;
+                }
+              };
+
+              var evoImage = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+                evo_id
+              )}.png`;
+
+              return (
+                <div key={evo_id}>
+                  <div className="evolution_box">
+                    <img className="evolution-image" src={evoImage} />
+                    <h2 className="evo_name">{evo_name}</h2>
+                    <span>
+                      <PokemonTypeContainer entry_number={evo_id} />
+                    </span>
+                  </div>
+                  {/* <i className="fa fa-chevron-down fa-3x" /> */}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -155,7 +146,7 @@ class Pokemon extends React.Component {
   }
 
   renderMarkup() {
-    const { data, stats, descriptions } = this.state;
+    const { data, stats, descriptions, evolutionChain } = this.state;
     var name = data.name;
     var id = data.id;
     if (descriptions.flavor_text_entries) {
@@ -168,6 +159,7 @@ class Pokemon extends React.Component {
 
       var { flavor_text_entries } = descriptions;
       var english_entry = null;
+
       for (let i = 0; i < flavor_text_entries.length && !english_entry; i++) {
         let text_entry = flavor_text_entries[i];
         if (text_entry.language.name === "en") {
@@ -205,7 +197,7 @@ class Pokemon extends React.Component {
             </div>
 
             <div className="description">
-              <p>{english_entry}</p>
+              <p className="info">{english_entry}</p>
             </div>
           </div>
           <div className="description-container">
@@ -268,12 +260,7 @@ class Pokemon extends React.Component {
             </div>
           </div>
         </div>
-        {this.state.evolutionChain.length > 0
-          ? // <div>display evolution</div>
-            this.evolutionChain()
-          : null}
-        {/* {this.evolutionChain()} */}
-
+        {evolutionChain.length > 0 ? this.evolutionChain() : null}
         <button className="explore-button">
           <Link
             to={{
@@ -287,7 +274,7 @@ class Pokemon extends React.Component {
     );
   }
   render() {
-    const { isLoading, data, error, descriptions, evolutionpic1 } = this.state;
+    const { isLoading, data, error, descriptions } = this.state;
     return (
       <div className="pokemon-wrapper">
         {isLoading ? <p>loading</p> : this.renderMarkup()}
