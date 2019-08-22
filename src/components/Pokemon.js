@@ -17,7 +17,6 @@ class Pokemon extends React.Component {
       evolutionChain: [],
       evolutionName: [],
       noEvo: "",
-
       error: false
     };
 
@@ -179,7 +178,7 @@ class Pokemon extends React.Component {
       }
     };
 
-    var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
+    var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${format_picture_id(
       id
     )}.png`;
 
