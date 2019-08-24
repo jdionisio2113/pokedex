@@ -1,9 +1,9 @@
 import React from "react";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import jsonPlaceholder from "../config/jsonPlaceholder";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { all, get } from "axios";
+import PokemonContainer from "../containers/PokemonContainer";
 
 class Pokemon extends React.Component {
   constructor(props) {
@@ -16,11 +16,13 @@ class Pokemon extends React.Component {
       descriptions: {},
       evolutionChain: [],
       evolutionName: [],
-      noEvo: "",
+      // noEvo: "",
       error: false
+      // open: false
     };
 
     this.renderMarkup = this.renderMarkup.bind(this);
+    this.openMenu = this.openMenu.bind(this);
   }
 
   componentDidMount() {
@@ -48,9 +50,6 @@ class Pokemon extends React.Component {
             var evolution_chain;
             (function foo(obj, arr) {
               var collection = arr ? arr : [];
-              // var x = obj.evolves_to.map(res => {
-              //   console.log(res);
-              // });
 
               if (obj.evolves_to && obj.evolves_to.length > 0) {
                 obj.evolves_to.map(item => {
@@ -64,11 +63,11 @@ class Pokemon extends React.Component {
                 });
               }
 
-              if (obj.evolves_to === undefined || obj.evolves_to.length == 0) {
-                return console.log("This pokémon has no evolutions");
-              } else {
-                return null;
-              }
+              // if (obj.evolves_to === undefined || obj.evolves_to.length == 0) {
+              //   return console.log("This pokémon has no evolutions");
+              // } else {
+              //   return console.log("has evolutions");
+              // }
             })(res.data.chain);
 
             var evolution_chain_strings = [get(baseForm), ...evolution_chain];
@@ -98,6 +97,10 @@ class Pokemon extends React.Component {
       .catch(err => {
         this.setState({ error: true });
       });
+  }
+
+  openMenu() {
+    this.setState({ open: !this.state.open });
   }
 
   evolutionChain() {
@@ -188,6 +191,7 @@ class Pokemon extends React.Component {
           <h1>{name}</h1>
           <h3 className="poke-number">#{id}</h3>
         </div>
+        {/* <button onClick={() => this.openMenu()}>mega</button> */}
         <div className="profile">
           <div className="column1">
             <img className="poke-image" src={imageUrl} />
@@ -211,8 +215,6 @@ class Pokemon extends React.Component {
                 var defense = "";
                 var attack = "";
                 var hp = "";
-
-                // console.log(stats);
 
                 switch (stat_title) {
                   case "speed":
@@ -260,18 +262,11 @@ class Pokemon extends React.Component {
           </div>
         </div>
         {evolutionChain.length > 0 ? this.evolutionChain() : null}
-        <button className="explore-button">
-          <Link
-            to={{
-              pathname: "/"
-            }}
-          >
-            Explore More Pokémon
-          </Link>
-        </button>
+        <PokemonContainer />
       </div>
     );
   }
+
   render() {
     const { isLoading, data, error, descriptions } = this.state;
     return (

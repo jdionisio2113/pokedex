@@ -1,5 +1,5 @@
 import React from "react";
-import PokemonListContainer from "../containers/PokemonListContainer";
+// import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonType from "./PokemonType";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import PokemonCard from "./PokemonCard";
@@ -9,7 +9,8 @@ class PokemonList extends React.Component {
     super(props);
 
     this.state = {
-      input: ""
+      input: "",
+      error: false
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -27,7 +28,7 @@ class PokemonList extends React.Component {
       const { pokemon } = this.props;
 
       // filter pokemon from pokedex based on user_input
-      var filtered_pokemon = pokemon.pokedex.filter(function(pk) {
+      var filtered_pokemon = pokemon.pokedex.filter(pk => {
         var pk_name = pk.pokemon_species.name.toLowerCase();
         var user_input = value.toLowerCase();
 
@@ -38,7 +39,18 @@ class PokemonList extends React.Component {
 
       if (value === "") {
         this.props.update_queried_pokemon([]);
+        this.setState({
+          error: false
+        });
+      } else if (filtered_pokemon.length === 0) {
+        this.props.update_queried_pokemon(filtered_pokemon);
+        this.setState({
+          error: true
+        });
       } else {
+        this.setState({
+          error: false
+        });
         this.props.update_queried_pokemon(filtered_pokemon);
       }
     }, 500);
@@ -81,7 +93,12 @@ class PokemonList extends React.Component {
           </form>
         </div>
         <div className="main-content">
-          <div className="pokemon-container">{this.displayPokemon()}</div>
+          {this.state.error ? (
+            <p>error</p>
+          ) : (
+            <div className="pokemon-container">{this.displayPokemon()}</div>
+          )}
+          {/* <div className="pokemon-container">{this.displayPokemon()}</div> */}
           <div className="load">
             <button className="load-more" onClick={this.props.displayNextBatch}>
               Load More Pokémon

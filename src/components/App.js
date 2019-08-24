@@ -1,6 +1,7 @@
 import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
+import PokemonContainer from "../containers/PokemonContainer";
 import Pokemon from "./Pokemon";
 var ReactRouter = require("react-router-dom");
 var Router = ReactRouter.BrowserRouter;
