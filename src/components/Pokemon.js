@@ -4,6 +4,7 @@ import jsonPlaceholder from "../config/jsonPlaceholder";
 import axios from "axios";
 import { all, get } from "axios";
 import PokemonContainer from "../containers/PokemonContainer";
+import LoadingMessage from "./LoadingMessage";
 
 class Pokemon extends React.Component {
   constructor(props) {
@@ -23,6 +24,15 @@ class Pokemon extends React.Component {
 
     this.renderMarkup = this.renderMarkup.bind(this);
     this.openMenu = this.openMenu.bind(this);
+    this.showLoad = this.showLoad.bind(this);
+  }
+
+  showLoad() {
+    clearTimeout(this.myTimeout);
+
+    this.myTimeout = setTimeout(function() {
+      return <p>loading</p>;
+    }, 500);
   }
 
   componentDidMount() {
@@ -241,7 +251,6 @@ class Pokemon extends React.Component {
                 return (
                   <div className="stats-container" key={index}>
                     <p className="stats">{stat_title}:</p>
-                    {/* {statNumber} */}
                     <div className="meter">
                       <span
                         className="width"
@@ -269,9 +278,12 @@ class Pokemon extends React.Component {
 
   render() {
     const { isLoading, data, error, descriptions } = this.state;
+    // var x = setTimeout(function() {
+    //   <p>loading</p>;
+    // }, 3000);
     return (
       <div className="pokemon-wrapper">
-        {isLoading ? <p>loading</p> : this.renderMarkup()}
+        {isLoading ? <LoadingMessage /> : this.renderMarkup()}
       </div>
     );
   }
