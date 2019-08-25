@@ -94,7 +94,7 @@ class PokemonList extends React.Component {
         </div>
         <div className="main-content">
           {this.state.error ? (
-            <p>error</p>
+            <h3 className="error_message">NO POKÉMON MATCHED YOUR SEARCH</h3>
           ) : (
             <div className="pokemon-container">{this.displayPokemon()}</div>
           )}

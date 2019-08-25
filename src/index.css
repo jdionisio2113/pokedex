@@ -246,7 +246,7 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  /* width: 60%; */
+  width: 60%;
 }
 
 .pokemon-wrapper {
@@ -408,6 +408,11 @@ img {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+.error_message {
+  color: red;
+  text-align: center;
 }
 
 @media screen and (min-width: 600px) {

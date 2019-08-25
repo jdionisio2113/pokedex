@@ -278,9 +278,6 @@ class Pokemon extends React.Component {
 
   render() {
     const { isLoading, data, error, descriptions } = this.state;
-    // var x = setTimeout(function() {
-    //   <p>loading</p>;
-    // }, 3000);
     return (
       <div className="pokemon-wrapper">
         {isLoading ? <LoadingMessage /> : this.renderMarkup()}
