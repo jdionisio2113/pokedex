@@ -2,7 +2,7 @@ import React from "react";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import PokemonContainer from "../containers/PokemonContainer";
 import LoadingMessage from "./LoadingMessage";
-import EvolutionChain from "./EvolutionChain";
+// import EvolutionChain from "./EvolutionChain";
 import jsonPlaceholder from "../config/jsonPlaceholder";
 import axios from "axios";
 import { all, get } from "axios";
@@ -136,7 +136,7 @@ class Pokemon extends React.Component {
                       </span>
                     </div>
                   </a>
-                  {/* <i className="fa fa-chevron-down fa-3x" /> */}
+                  {/* <i className="fa fa-chevron-up fa-3x" /> */}
                 </div>
               );
             })}
@@ -193,7 +193,7 @@ class Pokemon extends React.Component {
         </div>
         {/* <button onClick={() => this.openMenu()}>mega</button> */}
         <div className="profile">
-          <div className="column1">
+          <div className="pokemon-profile">
             <img className="poke-image" src={imageUrl} />
             <div className="type-container">
               <PokemonTypeContainer entry_number={id} />

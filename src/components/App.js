@@ -48,7 +48,7 @@ class App extends React.Component {
           </Switch>
         </Router>
         <button className="scroll-up" onClick={this.handleClick}>
-          SCROLL UP
+          <i className="fa fa-chevron-up fa-3x" />
         </button>
       </div>
     );

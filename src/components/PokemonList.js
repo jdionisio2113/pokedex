@@ -39,16 +39,19 @@ class PokemonList extends React.Component {
       });
 
       if (value === "") {
+        document.querySelector(".load-more").style.visibility = "visible";
         this.props.update_queried_pokemon([]);
         this.setState({
           error: false
         });
       } else if (filtered_pokemon.length === 0) {
+        // document.querySelector(".load-more").style.visibility = "hidden";
         this.props.update_queried_pokemon(filtered_pokemon);
         this.setState({
           error: true
         });
       } else {
+        document.querySelector(".load-more").style.visibility = "hidden";
         this.setState({
           error: false
         });
@@ -81,9 +84,9 @@ class PokemonList extends React.Component {
       <div className="pokedex-container">
         <div className="input-container">
           <form className="nav">
-            {/* <Link to={{ pathname: `/` }}> */}
-            <h1 className="logo">POKEDÉX</h1>
-            {/* </Link> */}
+            <a className="home-link" href={`/`}>
+              <h1 className="logo">POKEDÉX</h1>
+            </a>
             <input
               type="text"
               name="Search Pokemon"
