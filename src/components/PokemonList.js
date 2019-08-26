@@ -3,6 +3,7 @@ import React from "react";
 import PokemonType from "./PokemonType";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import PokemonCard from "./PokemonCard";
+import { Link } from "react-router-dom";
 
 class PokemonList extends React.Component {
   constructor(props) {
@@ -80,7 +81,9 @@ class PokemonList extends React.Component {
       <div className="pokedex-container">
         <div className="input-container">
           <form className="nav">
+            {/* <Link to={{ pathname: `/` }}> */}
             <h1 className="logo">POKEDÉX</h1>
+            {/* </Link> */}
             <input
               type="text"
               name="Search Pokemon"

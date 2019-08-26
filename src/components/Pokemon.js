@@ -1,10 +1,11 @@
 import React from "react";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
+import PokemonContainer from "../containers/PokemonContainer";
+import LoadingMessage from "./LoadingMessage";
+import EvolutionChain from "./EvolutionChain";
 import jsonPlaceholder from "../config/jsonPlaceholder";
 import axios from "axios";
 import { all, get } from "axios";
-import PokemonContainer from "../containers/PokemonContainer";
-import LoadingMessage from "./LoadingMessage";
 
 class Pokemon extends React.Component {
   constructor(props) {
@@ -17,22 +18,14 @@ class Pokemon extends React.Component {
       descriptions: {},
       evolutionChain: [],
       evolutionName: [],
-      // noEvo: "",
-      error: false
+      variety: [],
+      error: false,
+      evoId: ""
       // open: false
     };
 
     this.renderMarkup = this.renderMarkup.bind(this);
     this.openMenu = this.openMenu.bind(this);
-    this.showLoad = this.showLoad.bind(this);
-  }
-
-  showLoad() {
-    clearTimeout(this.myTimeout);
-
-    this.myTimeout = setTimeout(function() {
-      return <p>loading</p>;
-    }, 500);
   }
 
   componentDidMount() {
@@ -47,7 +40,8 @@ class Pokemon extends React.Component {
       .then(res => {
         this.setState({
           isLoading: false,
-          descriptions: res.data
+          descriptions: res.data,
+          variety: res.data.varieties
         });
 
         return res.data;
@@ -68,16 +62,9 @@ class Pokemon extends React.Component {
                 });
               } else {
                 evolution_chain = collection.map(function(item) {
-                  // console.log(item);
                   return get(item.species.url);
                 });
               }
-
-              // if (obj.evolves_to === undefined || obj.evolves_to.length == 0) {
-              //   return console.log("This pokémon has no evolutions");
-              // } else {
-              //   return console.log("has evolutions");
-              // }
             })(res.data.chain);
 
             var evolution_chain_strings = [get(baseForm), ...evolution_chain];
@@ -86,10 +73,11 @@ class Pokemon extends React.Component {
                 this.setState({
                   evolutionChain: data
                 });
-                console.log(this.state.evolutionChain);
+                // console.log(this.state.evolutionChain);
               })
               .catch(function(err) {
                 console.warn(err);
+                return <h3>SOMETHING WENT WRONG! TRY AGAIN LATER.</h3>;
               });
           });
         }
@@ -114,8 +102,6 @@ class Pokemon extends React.Component {
   }
 
   evolutionChain() {
-    // console.log(this.state.evolutionId);
-    // console.log(this.state.evolutionChain);
     return (
       <div className="evo-container">
         <div className="evo_wrapper">
@@ -123,6 +109,7 @@ class Pokemon extends React.Component {
           <div className="evo_chart">
             {this.state.evolutionChain.map(res => {
               var evo_id = res.data.id;
+
               var evo_name = res.data.name;
               var format_picture_id = function(num) {
                 if (num <= 9) {
@@ -140,13 +127,15 @@ class Pokemon extends React.Component {
 
               return (
                 <div key={evo_id}>
-                  <div className="evolution_box">
-                    <img className="evolution-image" src={evoImage} />
-                    <h2 className="evo_name">{evo_name}</h2>
-                    <span>
-                      <PokemonTypeContainer entry_number={evo_id} />
-                    </span>
-                  </div>
+                  <a href={`/pokemon/${evo_id}`}>
+                    <div className="evolution_box">
+                      <img className="evolution-image" src={evoImage} />
+                      <h2 className="evo_name">{evo_name}</h2>
+                      <span>
+                        <PokemonTypeContainer entry_number={evo_id} />
+                      </span>
+                    </div>
+                  </a>
                   {/* <i className="fa fa-chevron-down fa-3x" /> */}
                 </div>
               );
@@ -158,9 +147,10 @@ class Pokemon extends React.Component {
   }
 
   renderMarkup() {
-    const { data, stats, descriptions, evolutionChain } = this.state;
+    const { data, stats, descriptions, evolutionChain, variety } = this.state;
     var name = data.name;
     var id = data.id;
+
     if (descriptions.flavor_text_entries) {
       var text = descriptions.flavor_text_entries[1].flavor_text;
 
