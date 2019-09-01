@@ -1,7 +1,7 @@
 import { RECEIVE_POKEMON_INFO } from "../actions";
 
 // const initialState = {
-//   pokemonInfo: [],
+//    pokemonInfo: [],
 //   isFetching: false
 // };
 

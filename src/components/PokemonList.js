@@ -69,11 +69,11 @@ class PokemonList extends React.Component {
     const { queried_pokemon, pokemon_to_display } = this.props.pokemon;
 
     if (queried_pokemon.length > 0) {
-      return queried_pokemon.map(function(pokemon) {
+      return queried_pokemon.map(function (pokemon) {
         return <PokemonCard pokemon={pokemon} key={pokemon.entry_number} />;
       });
     } else {
-      return pokemon_to_display.map(function(pokemon) {
+      return pokemon_to_display.map(function (pokemon) {
         return <PokemonCard pokemon={pokemon} key={pokemon.entry_number} />;
       });
     }
@@ -84,9 +84,10 @@ class PokemonList extends React.Component {
       <div className="pokedex-container">
         <div className="input-container">
           <form className="nav">
-            <a className="home-link" href={`/`}>
+            <Link to={{ pathname: "/" }}>
               <h1 className="logo">POKEDÉX</h1>
-            </a>
+            </Link>
+
             <input
               type="text"
               name="Search Pokemon"
@@ -102,9 +103,9 @@ class PokemonList extends React.Component {
           {this.state.error ? (
             <h3 className="error_message">NO POKÉMON MATCHED YOUR SEARCH</h3>
           ) : (
-            <div className="pokemon-container">{this.displayPokemon()}</div>
-          )}
-          {/* <div className="pokemon-container">{this.displayPokemon()}</div> */}
+              <div className="pokemon-container">{this.displayPokemon()}</div>
+            )}
+
           <div className="load">
             <button className="load-more" onClick={this.props.displayNextBatch}>
               Load More Pokémon

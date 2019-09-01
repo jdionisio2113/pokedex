@@ -1,4 +1,4 @@
-import jsonPlaceholder from "../config/jsonPlaceholder";
+import endpoint from "../config/endpoint";
 import _ from "lodash";
 import regeneratorRuntime from "regenerator-runtime";
 
@@ -11,11 +11,18 @@ export const INPUT_VALUE = "INPUT_VALUE";
 export const UPDATE_QUERIED_POKEMON = "UPDATE_QUERIED_POKEMON";
 
 export const receivePokemon = () => async dispatch => {
-  const response = await jsonPlaceholder.get("/pokedex/1");
-  dispatch({
-    type: RECEIVE_POKEMON,
-    payload: response.data.pokemon_entries
-  });
+  try {
+    const response = await endpoint.get("/pokedex/1");
+    dispatch({
+      type: RECEIVE_POKEMON,
+      payload: response.data.pokemon_entries
+    })
+  } catch (err) {
+    dispatch({
+      type: REQUEST_FAILED,
+      error: err.toString()
+    });
+  }
 };
 
 export const receivePokemonInfo = id => dispatch => {
@@ -23,21 +30,27 @@ export const receivePokemonInfo = id => dispatch => {
 };
 
 const _receivePokemonInfo = _.memoize(async (id, dispatch) => {
-  const response = await jsonPlaceholder.get(`/pokemon/${id}`);
+  const response = await endpoint.get(`/pokemon/${id}`);
 
   dispatch({ type: RECEIVE_POKEMON_INFO, payload: response.data });
 });
 
 export const displayNextBatch = () => dispatch => {
-  dispatch({ type: DISPLAY_NEXT_BATCH });
+  try { dispatch({ type: DISPLAY_NEXT_BATCH }) }
+  catch (err) {
+    dispatch({
+      type: REQUEST_FAILED,
+      error: err.toString()
+    });
+  }
 };
 
-// export const update_queried_pokemon = function(queried_pokemon) {
-//   return function(dispatch) {
-//     dispatch({ type: "UPDATE_QUERIED_POKEMON", payload: queried_pokemon });
-//   };
-// };
-
 export const update_queried_pokemon = queried_pokemon => dispatch => {
-  dispatch({ type: UPDATE_QUERIED_POKEMON, payload: queried_pokemon });
+  try { dispatch({ type: UPDATE_QUERIED_POKEMON, payload: queried_pokemon }) }
+  catch (err) {
+    dispatch({
+      type: REQUEST_FAILED,
+      error: err.toString()
+    });
+  }
 };

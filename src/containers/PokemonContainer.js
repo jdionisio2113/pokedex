@@ -17,15 +17,15 @@ class PokemonContainer extends React.Component {
   }
   render() {
     return (
-      <button className="explore-button" onClick={this.clickExploreButton}>
-        <Link
-          to={{
-            pathname: "/"
-          }}
-        >
+      <Link
+        to={{
+          pathname: "/"
+        }}
+      >
+        <button className="explore-button" onClick={this.clickExploreButton}>
           Explore More Pokémon
-        </Link>
-      </button>
+        </button>
+      </Link>
     );
   }
 }

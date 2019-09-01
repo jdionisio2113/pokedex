@@ -10,7 +10,8 @@ const initialState = {
   pokedex: [],
   pokemon_to_display: [],
   queried_pokemon: [],
-  isFetching: false
+  isFetching: false,
+  error: ''
 };
 
 export default (state = initialState, action) => {
@@ -22,7 +23,8 @@ export default (state = initialState, action) => {
     case FETCH_POKEMON:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        error: ''
       };
     case RECEIVE_POKEMON:
       var pokeToDisplay = action.payload.slice(0, 12);
@@ -31,7 +33,8 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: false,
         pokedex: action.payload,
-        pokemon_to_display: pokeToDisplay
+        pokemon_to_display: pokeToDisplay,
+        error: ''
       };
     case DISPLAY_NEXT_BATCH:
       // refer to the last pokemon in pokemon_to_display array
@@ -59,12 +62,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         queried_pokemon: action.payload
+        , error: ''
       };
 
     case REQUEST_FAILED:
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
+        error: action.error
       };
 
     default:

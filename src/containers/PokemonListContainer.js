@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import {
   receivePokemon,
   displayNextBatch,
-  scrollToTop,
   findPokemon,
   update_queried_pokemon
 } from "../actions";

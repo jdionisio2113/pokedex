@@ -226,6 +226,7 @@ img {
   font-size: 3em;
   text-align: center;
   margin: 0;
+  color: black;
 }
 
 .load-more {
@@ -534,6 +535,7 @@ img {
   .pokemon-container {
     margin: 0 auto;
     max-width: 60%;
+    margin-top: 3.2em;
   }
 
   .pokemon-image {
