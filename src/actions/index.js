@@ -4,6 +4,7 @@ import regeneratorRuntime from "regenerator-runtime";
 
 import {
     RECEIVE_POKEMON,
+    FETCH_POKEMON,
     REQUEST_FAILED,
     RECEIVE_POKEMON_INFO,
     DISPLAY_NEXT_BATCH,
@@ -11,12 +12,22 @@ import {
 } from "../config/constants";
 
 export const receivePokemon = () => async dispatch => {
+    dispatch({
+        type: FETCH_POKEMON
+    });
+
     try {
         const response = await endpoint.get("/pokedex/1");
-        dispatch({
-            type: RECEIVE_POKEMON,
-            payload: response.data.pokemon_entries
-        });
+
+        // Use setTimeout to display loading interface
+        // for at least 1 second to avoid a flashing loading
+        // symbol whenever user is on fast network
+        setTimeout(() => {
+            dispatch({
+                type: RECEIVE_POKEMON,
+                payload: response.data.pokemon_entries
+            });
+        }, 1000);
     } catch (err) {
         dispatch({
             type: REQUEST_FAILED,
