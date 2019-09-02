@@ -1,5 +1,6 @@
 import endpoint from "../config/endpoint";
 import _ from "lodash";
+import regeneratorRuntime from "regenerator-runtime";
 
 import {
     RECEIVE_POKEMON,
