@@ -4,7 +4,7 @@ import {
   REQUEST_FAILED,
   DISPLAY_NEXT_BATCH,
   UPDATE_QUERIED_POKEMON
-} from "../actions";
+} from "../config/constants";
 
 const initialState = {
   pokedex: [],

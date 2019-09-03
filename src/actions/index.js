@@ -2,13 +2,13 @@ import endpoint from "../config/endpoint";
 import _ from "lodash";
 import regeneratorRuntime from "regenerator-runtime";
 
-export const FETCH_POKEMON = "FETCH_POKEMON";
-export const RECEIVE_POKEMON = "RECEIVE_POKEMON";
-export const REQUEST_FAILED = "REQUEST_FAILED";
-export const RECEIVE_POKEMON_INFO = "RECEIVE_POKEMON_INFO";
-export const DISPLAY_NEXT_BATCH = "DISPLAY_NEXT_BATCH";
-export const INPUT_VALUE = "INPUT_VALUE";
-export const UPDATE_QUERIED_POKEMON = "UPDATE_QUERIED_POKEMON";
+import {
+  RECEIVE_POKEMON,
+  REQUEST_FAILED,
+  RECEIVE_POKEMON_INFO,
+  DISPLAY_NEXT_BATCH,
+  UPDATE_QUERIED_POKEMON
+} from "../config/constants";
 
 export const receivePokemon = () => async dispatch => {
   try {

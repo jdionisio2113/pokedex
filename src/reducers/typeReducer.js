@@ -1,9 +1,4 @@
-import { RECEIVE_POKEMON_INFO } from "../actions";
-
-// const initialState = {
-//    pokemonInfo: [],
-//   isFetching: false
-// };
+import { RECEIVE_POKEMON_INFO } from "../config/constants";
 
 export default (state = [], action) => {
   switch (action.type) {
