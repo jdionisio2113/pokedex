@@ -3,11 +3,9 @@ import { connect } from "react-redux";
 import {
   receivePokemon,
   displayNextBatch,
-  findPokemon,
   update_queried_pokemon
 } from "../actions";
 import PokemonList from "../components/PokemonList";
-import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 
 class PokemonListContainer extends React.Component {
   componentDidMount() {

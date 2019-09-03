@@ -1,5 +1,4 @@
 import React from "react";
-import Pokemon from "../components/Pokemon";
 import { update_queried_pokemon } from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";

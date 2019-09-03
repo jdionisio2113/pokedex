@@ -1,7 +1,4 @@
 import React from "react";
-// import PokemonListContainer from "../containers/PokemonListContainer";
-import PokemonType from "./PokemonType";
-import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import PokemonCard from "./PokemonCard";
 import { Link } from "react-router-dom";
 
