@@ -3,19 +3,10 @@ import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import PokemonContainer from "../containers/PokemonContainer";
 import LoadingMessage from "./LoadingMessage";
 import endpoint from "../config/endpoint";
+import format_picture_id from '../utils/formatPictureId'
 import axios from "axios";
 import { all, get } from "axios";
 import { Link } from "react-router-dom";
-
-var format_picture_id = function (num) {
-  if (num <= 9) {
-    return `00${num}`;
-  } else if (num >= 10 && num <= 99) {
-    return `0${num}`;
-  } else {
-    return num;
-  }
-};
 
 class Pokemon extends React.Component {
   constructor(props) {

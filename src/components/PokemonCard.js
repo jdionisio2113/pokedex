@@ -1,19 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
+import format_picture_id from '../utils/formatPictureId'
 
 function PokemonCard({ pokemon }) {
   var name = pokemon.pokemon_species.name;
   var id = pokemon.entry_number;
-  var format_picture_id = function(num) {
-    if (num <= 9) {
-      return `00${num}`;
-    } else if (num >= 10 && num <= 99) {
-      return `0${num}`;
-    } else {
-      return num;
-    }
-  };
 
   var imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
     id
