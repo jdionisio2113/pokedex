@@ -5,7 +5,6 @@ export default (state = [], action) => {
     case RECEIVE_POKEMON_INFO:
       return [
         ...state,
-        // isFetching: false,
         action.payload
       ];
     default:

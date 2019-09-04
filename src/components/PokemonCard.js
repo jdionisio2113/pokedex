@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PokemonTypeContainer from "../containers/PokemonTypeContainer";
-import format_picture_id from '../utils/formatPictureId'
+import format_picture_id from '../utils/format_picture_id'
 
 function PokemonCard({ pokemon }) {
   var name = pokemon.pokemon_species.name;

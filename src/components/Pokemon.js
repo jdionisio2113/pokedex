@@ -3,10 +3,12 @@ import PokemonTypeContainer from "../containers/PokemonTypeContainer";
 import PokemonContainer from "../containers/PokemonContainer";
 import LoadingMessage from "./LoadingMessage";
 import endpoint from "../config/endpoint";
-import format_picture_id from '../utils/formatPictureId'
+import Statistics from "./Statistics";
+import format_picture_id from '../utils/format_picture_id'
+import EvolutionChain from './EvolutionChain';
 import axios from "axios";
 import { all, get } from "axios";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 class Pokemon extends React.Component {
   constructor(props) {
@@ -32,60 +34,66 @@ class Pokemon extends React.Component {
       isLoading: true
     });
 
-    endpoint
-      .get(`/pokemon-species/${id}`)
-      .then(res => {
-        this.setState({
-          isLoading: false,
-          descriptions: res.data
-        });
+    var data,
+      stats,
+      descriptions,
+      evolutionChain = null;
 
-        return res.data;
-      })
-      .then(data => {
-        if (data.evolution_chain.url) {
-          axios.get(data.evolution_chain.url).then(res => {
-            var baseForm = res.data.chain.species.url;
-
-            var evolution_chain;
-            (function evolutionCollection(obj, arr) {
-              var collection = arr ? arr : [];
-
-              if (obj.evolves_to && obj.evolves_to.length > 0) {
-                obj.evolves_to.map(item => {
-                  collection.push(item);
-                  evolutionCollection(item, collection);
-                });
-              } else {
-                evolution_chain = collection.map(function (item) {
-                  return get(item.species.url);
-                });
-              }
-            })(res.data.chain);
-
-            var evolution_chain_strings = [get(baseForm), ...evolution_chain];
-            all(evolution_chain_strings)
-              .then(data => {
-                this.setState({
-                  evolutionChain: data
-                });
-                // console.log(this.state.evolutionChain);
-              })
-              .catch(function (err) {
-                console.warn(err);
-                console.log(err)
-              });
-          });
-        }
-      });
-
+    // Fetch pokemon's basic info (stats & image)
     endpoint
       .get(`/pokemon/${id}`)
       .then(res => {
+        data = res.data,
+          stats = res.data.stats
+
+        // Fetch pokemon's description
+        return endpoint.get(`/pokemon-species/${id}`);
+      })
+      .then(res => {
+        descriptions = res.data;
+
+        // Fetch evolution chain
+        return axios.get(res.data.evolution_chain.url);
+      })
+      .then(res => {
+        var baseForm = res.data.chain.species.url;
+        var evolution_chain;
+
+        // Use recursion to gather API endpoints for a pokemon's
+        // evolution chain. Note: 1 URL per evolution
+        (function collectEvolutionEndpoints(obj, arr) {
+          var collection = arr ? arr : [];
+
+          if (obj.evolves_to && obj.evolves_to.length > 0) {
+            obj.evolves_to.map(item => {
+              collection.push(item);
+              collectEvolutionEndpoints(item, collection);
+            });
+          } else {
+            evolution_chain = collection.map(function (item) {
+              return get(item.species.url);
+            });
+          }
+        })(res.data.chain);
+
+        var evolution_chain_strings = [
+          get(baseForm),
+          ...evolution_chain
+        ];
+        // Fetch info to display evolution chain
+        return all(evolution_chain_strings);
+      })
+      .then(res => {
+        evolutionChain = res.map(obj => {
+          return obj.data;
+        })
         this.setState({
           isLoading: false,
-          data: res.data,
-          stats: res.data.stats
+          error: false,
+          evolutionChain,
+          data,
+          stats,
+          descriptions
         });
       })
       .catch(err => {
@@ -112,10 +120,9 @@ class Pokemon extends React.Component {
         <div className="evo_wrapper">
           <h2 className="evo_title">Evolutions</h2>
           <div className="evo_chart">
-            {this.state.evolutionChain.map(res => {
-              var evo_id = res.data.id;
-
-              var evo_name = res.data.name;
+            {evolutionChainArr.map(pokemon => {
+              var evo_id = pokemon.id;
+              var evo_name = pokemon.name;
 
               var evoImage = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${format_picture_id(
                 evo_id
@@ -125,10 +132,15 @@ class Pokemon extends React.Component {
                 <div key={evo_id}>
                   <Link to={{ pathname: `/pokemon/${evo_id}` }}>
                     <div className="evolution_box">
-                      <img className="evolution-image" src={evoImage} />
+                      <img
+                        className="evolution-image"
+                        src={evoImage}
+                      />
                       <h2 className="evo_name">{evo_name}</h2>
                       <span>
-                        <PokemonTypeContainer entry_number={evo_id} />
+                        <PokemonTypeContainer
+                          entry_number={evo_id}
+                        />
                       </span>
                     </div>
                   </Link>
@@ -140,7 +152,6 @@ class Pokemon extends React.Component {
       </div>
     );
   }
-
 
   renderMarkup() {
     const {
@@ -194,63 +205,11 @@ class Pokemon extends React.Component {
             </div>
           </div>
           <div className="description-container">
-            <div className="stats-wrapper">
-              <h3>BASE STATS</h3>
-              {stats.map((stat, index) => {
-                var statNumber = stat.base_stat;
-                var stat_title = stat.stat.name;
-                var speed = "";
-                var specialDefense = "";
-                var specialAttack = "";
-                var defense = "";
-                var attack = "";
-                var hp = "";
-
-                switch (stat_title) {
-                  case "speed":
-                    speed = statNumber + "px";
-
-                  case "special-defense":
-                    specialDefense = statNumber + "px";
-
-                  case "special-attack":
-                    specialAttack = statNumber + "px";
-
-                  case "defense":
-                    defense = statNumber + "px";
-
-                  case "attack":
-                    attack = statNumber + "px";
-
-                  case "hp":
-                    hp = statNumber + "px";
-
-                  default:
-                }
-
-                return (
-                  <div className="stats-container" key={index}>
-                    <p className="stats">{stat_title}:</p>
-                    <div className="meter">
-                      <span
-                        className="width"
-                        style={{
-                          width: speed,
-                          width: specialDefense,
-                          width: specialAttack,
-                          width: attack,
-                          width: defense,
-                          width: hp
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <Statistics stats={stats} />
           </div>
         </div>
-        {evolutionChain.length > 0 ? this.evolutionChain() : null}
+        {evolutionChain.length > 0 ? <EvolutionChain evolutionChainArr={evolutionChain} />
+          : null}
         <PokemonContainer />
       </div>
     );
