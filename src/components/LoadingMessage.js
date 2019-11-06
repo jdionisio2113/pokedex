@@ -3,7 +3,7 @@ import React from "react";
 class LoadingMessage extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log('i am on develop branch')
+
 		this.enableMessage = this.enableMessage.bind(this);
 
 		this.state = {
