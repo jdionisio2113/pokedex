@@ -13,6 +13,9 @@ class App extends React.Component {
 	}
 
 	handleScroll() {
+
+
+		console.log('test')
 		// Get scroll position
 		// if scroll position is above 100px, display the "scroll to top" button, otherwise don't display the button
 		// const scrollable =

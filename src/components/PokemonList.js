@@ -131,7 +131,7 @@ class PokemonList extends React.Component {
 		return (
 			<div className="pokedex-container">
 				<div className="input-container">
-					<form className="nav">
+					<div className="nav">
 						<Link to={{ pathname: "/" }}>
 							<h1 className="logo">POKEDÉX</h1>
 						</Link>
@@ -145,7 +145,7 @@ class PokemonList extends React.Component {
 							onChange={this.handleSearch}
 							value={this.state.input}
 						/>
-					</form>
+					</div>
 				</div>
 				<div className="main-content">
 					{this.populateMainContent()}
