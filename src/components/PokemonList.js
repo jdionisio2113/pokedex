@@ -46,7 +46,7 @@ class PokemonList extends React.Component {
 			// to contain an empty array so pokemon_to_display
 			// will display
 			if (value === "") {
-				document.querySelector(".load-more").style.visibility = "visible";
+				// document.querySelector(".load-more").style.visibility = "visible";
 				this.props.update_queried_pokemon([]);
 				this.setState({
 					error: false
@@ -59,7 +59,7 @@ class PokemonList extends React.Component {
 					error: true
 				});
 			} else {
-				document.querySelector(".load-more").style.visibility = "hidden";
+				// document.querySelector(".load-more").style.visibility = "hidden";
 				this.setState({
 					error: false
 				});
