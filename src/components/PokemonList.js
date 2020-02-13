@@ -50,6 +50,8 @@ class PokemonList extends React.Component {
 				this.setState({
 					error: false
 				});
+				document.querySelector(".load-more").style.visibility = "visible";
+
 				// If no pokemon is found based on user's query,
 				// set state.error to true to show "no pokemon found"
 			} else if (filtered_pokemon.length === 0) {
@@ -58,11 +60,11 @@ class PokemonList extends React.Component {
 					error: true
 				});
 			} else {
-				document.querySelector(".load-more").style.visibility = "hidden";
 				this.setState({
 					error: false
 				});
 				this.props.update_queried_pokemon(filtered_pokemon);
+				document.querySelector(".load-more").style.visibility = "hidden";
 			}
 		}, 500);
 	}
@@ -119,7 +121,7 @@ class PokemonList extends React.Component {
 							onClick={this.props.displayNextBatch}
 						>
 							Load More Pokémon
-			</button>
+						</button>
 					</div>
 				</>
 			)
