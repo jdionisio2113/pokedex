@@ -19,6 +19,11 @@ li {
   list-style: none;
 }
 
+button {
+  background: none;
+  border: none;
+}
+
 .home-link {
   color: black;
 }
@@ -434,6 +439,11 @@ img {
 .error_message {
   color: red;
   text-align: center;
+}
+
+.back-button {
+  margin-top: 1.5em;
+  color: darkgrey;
 }
 
 @media screen and (min-width: 600px) {

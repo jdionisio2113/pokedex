@@ -6,9 +6,9 @@ import endpoint from "../config/endpoint";
 import Statistics from "./Statistics";
 import format_picture_id from '../utils/format_picture_id'
 import EvolutionChain from './EvolutionChain';
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { all, get } from "axios";
-// import { Link } from "react-router-dom";
 
 class Pokemon extends React.Component {
 	constructor(props) {
@@ -189,6 +189,9 @@ class Pokemon extends React.Component {
 
 		return (
 			<div className="poke-wrapper">
+				<button>
+					<Link to={{ pathname: "/" }}><i class="fa fa-arrow-circle-left fa-3x back-button"></i></Link>
+				</button>
 				<div className="pokemon-title">
 					<h1>{name}</h1>
 					<h3 className="poke-number">#{id}</h3>

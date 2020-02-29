@@ -1,6 +1,7 @@
 import React from "react";
 import PokemonListContainer from "../containers/PokemonListContainer";
 import Pokemon from "./Pokemon";
+import Navigation from "./Navigation"
 var ReactRouter = require("react-router-dom");
 var Router = ReactRouter.BrowserRouter;
 var Route = ReactRouter.Route;
@@ -47,6 +48,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<Router>
+					{/* <Navigation /> */}
 					<Switch>
 						<Route exact path="/pokemon/:id" component={Pokemon} />
 						<Route exact path="/" component={PokemonListContainer} />
