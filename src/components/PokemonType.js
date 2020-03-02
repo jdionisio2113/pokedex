@@ -88,12 +88,9 @@ class PokemonType extends React.Component {
 				default:
 			}
 
-			// console.log(type_className);
-
 			return (
 				<div key={index} className="type">
 					<p className={type_className}>{poke.type.name}</p>
-					{/* <PokemonList type_className={"type_className"} /> */}
 				</div>
 			);
 		});

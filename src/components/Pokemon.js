@@ -188,7 +188,7 @@ class Pokemon extends React.Component {
 		)}.png`;
 
 		return (
-			<div className="poke-wrapper">
+			<div className="poke-container">
 				<button>
 					<Link to={{ pathname: "/" }}><i class="fa fa-arrow-circle-left fa-3x back-button"></i></Link>
 				</button>
