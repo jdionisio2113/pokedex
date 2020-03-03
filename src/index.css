@@ -107,7 +107,7 @@ img {
 
 .load {
   text-align: center;
-  margin: 3em 0;
+  margin: 1em 0;
 }
 
 .error_message {
@@ -457,7 +457,7 @@ img {
   }
 
   .pokemon-container {
-    margin: 2.3em 8em 0em 8em;
+    margin: 1.3em 8em 0em 8em;
   }
 
   .scroll-up {

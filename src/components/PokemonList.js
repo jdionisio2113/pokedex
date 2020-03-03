@@ -133,9 +133,9 @@ class PokemonList extends React.Component {
 			<div className="pokedex-container">
 				<div className="input-container">
 					<div className="nav">
-						<Link to={{ pathname: "/" }}>
+						<a href="/">
 							<h1 className="logo">POKEDÉX</h1>
-						</Link>
+						</a>
 
 						<input
 							type="text"
