@@ -32,8 +32,8 @@ img {
 .scroll-up {
   scroll-behavior: smooth;
   position: fixed;
-  top: 90%;
-  right: 0;
+  top: 85%;
+  right: 3%;
   background-color: grey;
   border: none;
   padding: 10px 5px;
@@ -356,7 +356,7 @@ img {
   padding: 0.7em;
   font-size: 1.2em;
   display: block;
-  margin: 1em auto;
+  margin: 3em auto;
   clear: both;
   transition: all 0.2s ease-in-out;
 }
@@ -385,7 +385,7 @@ img {
 }
 
 .evo_wrapper {
-  background-color: #887070;
+  background-color: #88707050;
   border-radius: 10px;
   background: #424242 url(./images/container_bg.png);
 }
@@ -524,7 +524,14 @@ img {
   }
 
   .poke-container {
-    margin: 0 8em;
+    width: 70%;
+    margin: 4em auto;
+    padding: 0 3em 3em;
+    background: white;
+  }
+  
+  .explore-button {
+    /* margin: 2em 0; */
   }
 }
 
