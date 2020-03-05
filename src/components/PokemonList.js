@@ -8,13 +8,13 @@ class PokemonList extends React.Component {
 		super(props);
 
 		this.state = {
-			input: "",
+			value: "",
 			error: false
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
 		this.displayPokemon = this.displayPokemon.bind(this);
-		this.populateMainContent = this.populateMainContent.bind(this)
+		this.populateMainContent = this.populateMainContent.bind(this);
 	}
 
 	/**
@@ -23,9 +23,7 @@ class PokemonList extends React.Component {
 		 *  @return
 		 */
 	handleSearch(e) {
-		var value = e.target.value;
-
-		this.setState({ input: value });
+		this.setState({ value: e.target.value });
 
 		clearTimeout(this.myTimeout);
 
@@ -35,7 +33,7 @@ class PokemonList extends React.Component {
 			// filter pokemon from pokedex based on user_input
 			var filtered_pokemon = pokemon.pokedex.filter(pk => {
 				var pk_name = pk.pokemon_species.name.toLowerCase();
-				var user_input = value.toLowerCase();
+				var user_input = this.state.value.toLowerCase();
 
 				if (pk_name.indexOf(user_input) !== -1) {
 					return pk;
@@ -45,12 +43,11 @@ class PokemonList extends React.Component {
 			// If input value is empty, update queried pokemon,
 			// to contain an empty array so pokemon_to_display
 			// will display
-			if (value === "") {
+			if (this.state.value === "") {
 				this.props.update_queried_pokemon([]);
 				this.setState({
 					error: false
 				});
-				document.querySelector(".load-more").style.visibility = "visible";
 
 				// If no pokemon is found based on user's query,
 				// set state.error to true to show "no pokemon found"
@@ -64,7 +61,6 @@ class PokemonList extends React.Component {
 					error: false
 				});
 				this.props.update_queried_pokemon(filtered_pokemon);
-				document.querySelector(".load-more").style.visibility = "hidden";
 			}
 		}, 500);
 	}
@@ -98,7 +94,7 @@ class PokemonList extends React.Component {
 		*  @return Object markup
 		*/
 	populateMainContent() {
-		const { error: apiError, isFetching } = this.props.pokemon;
+		const { error: apiError, isFetching, queried_pokemon } = this.props.pokemon;
 		const { error: queryError } = this.state;
 
 		if (queryError || apiError !== "") {
@@ -116,12 +112,14 @@ class PokemonList extends React.Component {
 						{this.displayPokemon()}
 					</div>
 					<div className="load">
-						<button
+
+						{queried_pokemon.length === 0 ? <button
 							className="load-more"
 							onClick={this.props.displayNextBatch}
 						>
 							Load More Pokémon
-						</button>
+						</button> : null}
+
 					</div>
 				</>
 			)
@@ -144,7 +142,7 @@ class PokemonList extends React.Component {
 							autoComplete="off"
 							className="input"
 							onChange={this.handleSearch}
-							value={this.state.input}
+							value={this.state.value}
 						/>
 					</div>
 				</div>

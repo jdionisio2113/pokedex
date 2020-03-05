@@ -529,10 +529,6 @@ img {
     padding: 0 3em 3em;
     background: white;
   }
-  
-  .explore-button {
-    /* margin: 2em 0; */
-  }
 }
 
 @media screen and (min-width: 1624px) {
