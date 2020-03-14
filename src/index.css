@@ -51,6 +51,12 @@ img {
   color: darkgrey;
 }
 
+.back-button:hover {
+  transform: scale(1.3);
+  transition: .3s ease-out;
+  color: #d22b2b
+}
+
 /* ================POKEMONLIST================= */
 
 .nav {

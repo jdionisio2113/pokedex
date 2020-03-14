@@ -190,7 +190,7 @@ class Pokemon extends React.Component {
 		return (
 			<div className="poke-container">
 				<button>
-					<a href="/"><i class="fa fa-arrow-circle-left fa-3x back-button"></i></a>
+					<a href="/"><i class="fa fa-home fa-3x back-button"></i></a>
 				</button>
 				<div className="pokemon-title">
 					<h1>{name}</h1>
