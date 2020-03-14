@@ -23,6 +23,7 @@ li {
 button {
   background: none;
   border: none;
+  outline: 0;
 }
 
 img {

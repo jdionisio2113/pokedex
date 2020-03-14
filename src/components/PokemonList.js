@@ -1,6 +1,6 @@
 import React from "react";
 import PokemonCard from "./PokemonCard";
-import LoadingMessage from './LoadingMessage'
+import LoadingMessage from "./LoadingMessage";
 import { Link } from "react-router-dom";
 
 class PokemonList extends React.Component {
